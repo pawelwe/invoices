@@ -1,9 +1,28 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import owl from '../assets/images/logo-owl.svg';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-export default class Navigation extends React.Component {
+class Navigation extends React.Component {
+    authButton() {
+        if (this.props.authenticated) {
+            return (
+                <li className="main-nav-menu-list-item" key="0">
+                    <a href="#" onClick={(e) => { e.preventDefault(); this.props.authenticate(false) }} className="main-nav-menu-list-item-link">Wyloguj się</a>
+                </li>
+            )
+        } else {
+            return (
+                <li className="main-nav-menu-list-item" key="0">
+                    <a href="#" onClick={(e) => { e.preventDefault(); this.props.authenticate(true) }} className="main-nav-menu-list-item-link">Zaloguj się</a>
+                </li>
+            )
+        }
+    }
+
     render() {
+
         return (
             <aside className="main-nav">
                 <NavLink className="main-nav-menu-list-item-link" to="/">
@@ -24,6 +43,7 @@ export default class Navigation extends React.Component {
                         <li className="main-nav-menu-list-item" key="4">
                             <NavLink className="main-nav-menu-list-item-link" to="5">Lista</NavLink>
                         </li>
+                        { this.authButton() }
                     </ul>
                 </nav>
                 <footer className="main-nav-footer">
@@ -34,3 +54,12 @@ export default class Navigation extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        authenticated: state.authenticated
+    }
+
+}
+
+export default connect(mapStateToProps, actions)(Navigation);

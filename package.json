@@ -9,6 +9,7 @@
     "dev": "webpack-dev-server --content-base dist/"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "history": "^4.6.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
