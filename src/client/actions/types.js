@@ -4,4 +4,6 @@ export const REMOVE_INVOICE_ROW = 'remove_invoice_row';
 export const RESET_INVOICE_ROWS = 'reset_invoice_rows';
 export const SET_ACTIVE_INVOICE = 'set_active_invoice';
 export const ROW_VALUE_UPDATE = 'row_value_update';
-export const AUTHENTICATE = 'authenticate';
+export const AUTH_USER = 'auth_user';
+export const UNAUTH_USER = 'unauth_user';
+export const AUTH_ERROR = 'auth_error';

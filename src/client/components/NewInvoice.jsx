@@ -31,10 +31,10 @@ class NewInvoice extends React.Component {
             vat: 0,
             name: ''
         });
+        this.props.authorizedRequest();
     }
 
     renderRows() {
-
         if(this.props.invoiceRows.length > 0) {
             const rows = this.props.invoiceRows.map((row, index) => {
                 return <InvoiceRow service={row} key={row.id} id={row.id} index={index + 1}/>
@@ -62,7 +62,6 @@ class NewInvoice extends React.Component {
                 })
             }
         );
-
     }
 
     render() {
@@ -84,8 +83,6 @@ class NewInvoice extends React.Component {
                 <footer className="placeholder"></footer>
             </form>
         )
-
-
     }
 }
 

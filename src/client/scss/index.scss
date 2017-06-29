@@ -1,7 +1,7 @@
-@import '../../node_modules/jeet/scss/index';
-@import '../../node_modules/breakpoint-sass/stylesheets/breakpoint';
-@import '../../node_modules/vex-js/sass/vex';
-@import '../../node_modules/vex-js/sass/vex-theme-wireframe';
+@import '../../../node_modules/jeet/scss/index';
+@import '../../../node_modules/breakpoint-sass/stylesheets/breakpoint';
+@import '../../../node_modules/vex-js/sass/vex';
+@import '../../../node_modules/vex-js/sass/vex-theme-wireframe';
 @import 'global/variables';
 @import 'global/utils';
 @import 'global/reset';
@@ -9,7 +9,7 @@
 @import 'global/general';
 @import 'global/transitions';
 @import 'global/dialogs';
-@import 'components/_start';
+@import 'components/start';
 @import 'components/navigation';
 @import 'components/invoice';
 @import 'components/invoices-list';
