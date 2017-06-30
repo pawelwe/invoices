@@ -33,7 +33,7 @@ import reqireAuth from './components/RequireAuth';
 const history = createHistory();
 
 // Build the middleware for intercepting and dispatching navigation actions
-import Async from './middlewares/async'
+import Async from './middlewares/async';
 const middleware = [routerMiddleware(history), Async, reduxThunk];
 
 // Add the reducer to your store on the `router` key

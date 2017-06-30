@@ -1,9 +1,20 @@
 export const FETCH_INVOICE_TEMPLATE = 'fetch_invoice_template';
+export const SET_ACTIVE_INVOICE = 'set_active_invoice';
+
 export const ADD_INVOICE_ROW = 'add_invoice_row';
 export const REMOVE_INVOICE_ROW = 'remove_invoice_row';
 export const RESET_INVOICE_ROWS = 'reset_invoice_rows';
-export const SET_ACTIVE_INVOICE = 'set_active_invoice';
-export const ROW_VALUE_UPDATE = 'row_value_update';
+export const UPDATE_INVOICE_ROW = 'update_invoice_row';
+
+export const UPDATE_INVOICE_FROM = 'update_invoice_from';
+export const UPDATE_INVOICE_TO = 'update_invoice_to';
+export const UPDATE_INVOICE_HEADER = 'update_invoice_header';
+export const UPDATE_INVOICE_DATE = 'update_invoice_date';
+export const UPDATE_INVOICE_ROW_LABELS = 'update_invoice_row_labels';
+export const UPDATE_INVOICE_PAYMENT_TYPE = 'update_invoice_payment_type';
+export const UPDATE_INVOICE_VALUE_IN_WORDS = 'update_invoice_value_in_words';
+export const UPDATE_INVOICE_ACCOUNT_NUMBER = 'update_invoice_account_number';
+
 export const AUTH_USER = 'auth_user';
 export const UNAUTH_USER = 'unauth_user';
 export const AUTH_ERROR = 'auth_error';

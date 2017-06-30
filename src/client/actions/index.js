@@ -6,28 +6,102 @@ import { push } from 'react-router-redux';
 
 import {
     FETCH_INVOICE_TEMPLATE,
+    SET_ACTIVE_INVOICE,
+    UPDATE_INVOICE_FROM,
+    UPDATE_INVOICE_TO,
+    UPDATE_INVOICE_HEADER,
+    UPDATE_INVOICE_DATE,
+    UPDATE_INVOICE_ROW_LABELS,
+    UPDATE_INVOICE_PAYMENT_TYPE,
+    UPDATE_INVOICE_VALUE_IN_WORDS,
+    UPDATE_INVOICE_ACCOUNT_NUMBER,
     ADD_INVOICE_ROW,
     REMOVE_INVOICE_ROW,
-    SET_ACTIVE_INVOICE,
-    ROW_VALUE_UPDATE,
+    UPDATE_INVOICE_ROW,
     RESET_INVOICE_ROWS,
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR
 } from './types';
 
+// INITIALIZING INVOICE
 export function fetchInvoiceTemplate() {
-    const webRequest = axios.get(FIREBASE_URL);
-    return {
-        type: FETCH_INVOICE_TEMPLATE,
-        payload: webRequest
+    return function(dispatch) {
+        axios.get(FIREBASE_URL)
+            .then(response => {
+                dispatch({
+                    type: FETCH_INVOICE_TEMPLATE,
+                    payload: response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 }
 
-export function setActiveTemplate(template) {
+export function setActiveInvoice(template) {
     return {
         type: SET_ACTIVE_INVOICE,
         payload: template
+    }
+}
+
+// UPDATING INVOICE STATE ACTIONS
+export function updateInvoiceFrom(text) {
+    return {
+        type: UPDATE_INVOICE_FROM,
+        payload: text
+    }
+}
+
+export function updateInvoiceTo(text) {
+    return {
+        type: UPDATE_INVOICE_TO,
+        payload: text
+    }
+}
+
+export function updateInvoiceHeader(text) {
+    return {
+        type: UPDATE_INVOICE_HEADER,
+        payload: text
+    }
+}
+
+export function updateInvoiceDate(text) {
+    return {
+        type: UPDATE_INVOICE_DATE,
+        payload: text
+    }
+}
+
+export function updateInvoiceValueInWords(text) {
+    return {
+        type: UPDATE_INVOICE_VALUE_IN_WORDS,
+        payload: text
+    }
+}
+
+export function updatePaymentType(text) {
+    return {
+        type: UPDATE_INVOICE_PAYMENT_TYPE,
+        payload: text
+    }
+}
+
+export function updateInvoiceAccountNumber(text) {
+    return {
+        type: UPDATE_INVOICE_ACCOUNT_NUMBER,
+        payload: text
+    }
+}
+
+// INVOICE ROWS ACTIONS
+export function updateInvoiceRowLabels(row) {
+    return {
+        type: UPDATE_INVOICE_ROW_LABELS,
+        payload: row
     }
 }
 
@@ -45,9 +119,9 @@ export function removeInvoiceRow(id) {
     }
 }
 
-export function rowValueUpdate(row) {
+export function updateRowValue(row) {
     return {
-        type: ROW_VALUE_UPDATE,
+        type: UPDATE_INVOICE_ROW,
         payload: row
     }
 }
@@ -59,15 +133,14 @@ export function resetInvoiceRows() {
     }
 }
 
+// AUTHENTICATION ACTIONS
 export function signinUser({ email, password }) {
     return function(dispatch) {
         axios.post(`${ROOT_URL}/signin`, { email, password })
             .then(response => {
-                dispatch((() => {
-                    return {
-                        type: AUTH_USER
-                    }
-                })());
+                dispatch({
+                    type: AUTH_USER
+                });
 
                 localStorage.setItem('token', response.data.token);
                 store.dispatch(push('/new-invoice'));
@@ -130,4 +203,3 @@ export function authorizedRequest() {
             })
     }
 }
-

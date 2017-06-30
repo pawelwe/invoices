@@ -1,13 +1,29 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-const newInvoiceTo = (props) => {
-    if(props.recipient) {
-        return (
-            <textarea defaultValue={props.recipient} className="invoice-to u-text-left" rows="7"></textarea>
-        )
-    } else {
-        return <span></span>
+class newInvoiceTo extends React.Component {
+
+    updateText(e) {
+        this.props.updateInvoiceTo(e.target.value);
     }
-};
 
-export default newInvoiceTo;
+    render() {
+        if(this.props.text) {
+            return (
+                <textarea onChange={this.updateText.bind(this)} defaultValue={this.props.text} className="invoice-to u-text-left" rows="7"></textarea>
+            )
+        } else {
+            return <div></div>
+        }
+    }
+
+}
+
+const mapStateToProps = (state) => {
+    return {
+        text: state.invoice.activeInvoice.recipient
+    }
+}
+
+export default connect(mapStateToProps, actions)(newInvoiceTo);

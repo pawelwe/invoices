@@ -82,6 +82,19 @@ legend {
   border-bottom: 1px solid $red;
 }
 
+.input-error {
+  position: relative;
+}
+
+.input-error:after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid red;
+}
+
 .error-text {
   color: $red;
   margin-top: .2rem;
@@ -94,13 +107,13 @@ legend {
 }
 
 button {
-  padding: 0;
-  width: 5rem;
-  height: 5rem;
+  padding: .4rem;
+  width: 4rem;
+  height: 4rem;
   background: $violet;
   border: 1px solid $violet;
   color: $white;
-  line-height: 1;
+  line-height: 1.1;
   cursor: pointer;
   border-radius: 50%;
   position: relative;

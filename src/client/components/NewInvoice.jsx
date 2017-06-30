@@ -8,8 +8,8 @@ import InvoiceHeader from './new-invoice/NewInvoiceHeader';
 import InvoiceDate from './new-invoice/NewInvoiceDate';
 import InvoiceHeaderRow from './new-invoice/NewInvoiceHeaderRow';
 import InvoiceRow from './new-invoice/NewInvoiceRow';
-// import calcSummary from './new-invoice/NewInvoiceCalcSummary';
-// import mainSummary from './new-invoice/NewInvoiceMainSummary';
+import CalcSummary from './new-invoice/NewInvoiceCalcSummary';
+import MainSummary from './new-invoice/NewInvoiceMainSummary';
 
 
 class NewInvoice extends React.Component {
@@ -23,20 +23,12 @@ class NewInvoice extends React.Component {
 
     componentWillMount() {
         this.props.fetchInvoiceTemplate()
-        this.props.resetInvoiceRows();
-        this.props.addInvoiceRow({
-            ammount: 1,
-            id: this.state.invoiceRows,
-            priceNetto: 0,
-            vat: 0,
-            name: ''
-        });
-        this.props.authorizedRequest();
+        // this.props.authorizedRequest();
     }
 
     renderRows() {
-        if(this.props.invoiceRows.length > 0) {
-            const rows = this.props.invoiceRows.map((row, index) => {
+        if(this.props.invoiceTemplate) {
+            const rows = this.props.invoiceTemplate.services.map((row, index) => {
                 return <InvoiceRow service={row} key={row.id} id={row.id} index={index + 1}/>
             });
             return rows;
@@ -47,17 +39,16 @@ class NewInvoice extends React.Component {
 
     addInvoiceRow(e) {
         e.preventDefault();
-        // debugger
         const currentRowId = this.state.rowId;
         this.setState({
             rowId: currentRowId + 1
         },
             () => {
                 this.props.addInvoiceRow({
-                    ammount: 1,
+                    ammount: '',
                     id: this.state.rowId,
-                    priceNetto: 0,
-                    vat: 0,
+                    priceNetto: '',
+                    vat: '',
                     name: ''
                 })
             }
@@ -66,30 +57,35 @@ class NewInvoice extends React.Component {
 
     render() {
         return (
-            <form className="invoice">
-                <header>
-                    <InvoiceFrom executive={ this.props.invoiceTemplate.executive } />
-                    <InvoiceTo recipient={ this.props.invoiceTemplate.recipient } />
-                </header>
-                <section className="invoice-data">
-                    <InvoiceHeader invoiceTitle={ this.props.invoiceTemplate.invoiceTitle } />
-                    <InvoiceDate invoiceDate={ this.props.invoiceTemplate.invoiceDate } />
-                    <section className="invoice-calc">
-                        <InvoiceHeaderRow headerRowLabels={ this.props.invoiceTemplate.labels }  />
-                        { this.renderRows() }
-                        <a href="#" className="invoice-calc-add-row-btn" onClick={this.addInvoiceRow.bind(this)}>+</a>
+            <div className="invoice">
+                {this.props.invoiceTemplate &&
+                <form className="invoice-form">
+                    <header>
+                        <InvoiceFrom />
+                        <InvoiceTo />
+                    </header>
+                    <section className="invoice-data">
+                        <InvoiceHeader />
+                        <InvoiceDate />
+                        <section className="invoice-calc">
+                            <InvoiceHeaderRow />
+                            { this.renderRows() }
+                            <a href="#" className="invoice-calc-add-row-btn" onClick={(e) => this.addInvoiceRow(e)}>+</a>
+                        </section>
+                        <CalcSummary />
+                        <MainSummary />
                     </section>
-                </section>
-                <footer className="placeholder"></footer>
-            </form>
+                    <footer className="placeholder"></footer>
+                </form>
+                }
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        invoiceTemplate: state.invoiceTemplate,
-        invoiceRows: state.invoiceRows
+        invoiceTemplate: state.invoice.activeInvoice
     }
 }
 
