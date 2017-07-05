@@ -39,7 +39,7 @@ class newInvoiceRow extends React.Component {
                     <span className="invoice-calc-input-wrap invoice-calc-value-netto">
                         <span className="invoice-calc-output invoice-calc-value-netto">{nettoValue(this.props.service)}</span>
                     </span>
-                    <span className={"invoice-calc-input-wrap invoice-calc-vat " + (isNaN(this.props.service.vat) || this.props.service.vat === ''  ? 'input-error' : '')}>
+                    <span className={"invoice-calc-input-wrap invoice-calc-vat " + (isNaN(this.props.service.vat.replace('%', '')) || this.props.service.vat === ''  ? 'input-error' : '')}>
                         <span className="invoice-calc-input-wrap-label">VAT: </span>
                         <textarea className="invoice-calc-input" rows="1" cols="1" onChange={this.updateRow.bind(this, 'vat')} value={this.props.vat}></textarea>
                     </span>
