@@ -1,6 +1,8 @@
 import {
-    FETCH_INVOICE_TEMPLATE,
-    SET_ACTIVE_INVOICE,
+    INIT_INVOICE_TEMPLATE,
+    UPDATE_TEMPLATE,
+    LOAD_INVOICE,
+    RESET_INVOICE,
     UPDATE_INVOICE_FROM,
     UPDATE_INVOICE_TO,
     UPDATE_INVOICE_HEADER,
@@ -17,16 +19,26 @@ import {
 
 export default function(state = {}, action) {
     switch (action.type) {
-        case FETCH_INVOICE_TEMPLATE:
+        case INIT_INVOICE_TEMPLATE:
             return {
                 ...state,
                 invoiceTemplate: { ...action.payload },
                 activeInvoice: { ...action.payload }
             }
-        case SET_ACTIVE_INVOICE:
+        case UPDATE_TEMPLATE:
+            return {
+                ...state,
+                invoiceTemplate: { ...action.payload }
+            }
+        case LOAD_INVOICE:
             return {
                 ...state,
                 activeInvoice: { ...action.payload }
+            }
+        case RESET_INVOICE:
+            return {
+                ...state,
+                activeInvoice: null
             }
         case UPDATE_INVOICE_FROM:
             return {

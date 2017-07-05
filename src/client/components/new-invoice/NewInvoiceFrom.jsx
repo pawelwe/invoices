@@ -9,15 +9,11 @@ class newInvoiceFrom extends React.Component {
     }
 
     render() {
-        if(this.props.text) {
-            return (
-                <div>
-                    <textarea onChange={this.updateText.bind(this)} defaultValue={this.props.text} className="invoice-from u-text-right " rows="1"></textarea>
-                </div>
-            )
-        } else {
-            return <div></div>
-        }
+        return (
+            <div>
+                <textarea onChange={this.updateText.bind(this)} defaultValue={ this.props.text } className="invoice-from u-text-right " rows="1"></textarea>
+            </div>
+        )
     }
 
 }

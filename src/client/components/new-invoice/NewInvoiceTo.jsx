@@ -9,13 +9,9 @@ class newInvoiceTo extends React.Component {
     }
 
     render() {
-        if(this.props.text) {
-            return (
-                <textarea onChange={this.updateText.bind(this)} defaultValue={this.props.text} className="invoice-to u-text-left" rows="7"></textarea>
-            )
-        } else {
-            return <div></div>
-        }
+        return (
+            <textarea onChange={this.updateText.bind(this)} defaultValue={this.props.text} className="invoice-to u-text-left" rows="7"></textarea>
+        )
     }
 
 }

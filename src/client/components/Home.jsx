@@ -1,6 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
+    componentWillMount() {
+        this.props.setRoute({route: 'home', param: null});
+    }
+
     render() {
         return (
             <main className="start-page">
@@ -14,3 +20,5 @@ export default class Home extends React.Component {
     }
 
 }
+
+export default connect(null, actions)(Home);

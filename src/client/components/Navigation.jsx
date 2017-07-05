@@ -5,20 +5,32 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Navigation extends React.Component {
-
     authButton() {
         if (!this.props.authenticated) {
             return (
                 <li className="main-nav-menu-list-item" key="7">
-                    <NavLink href="#" to="signin" className="main-nav-menu-list-item-link">Sign in</NavLink>
+                    <NavLink href="#" to="signin" className={this.props.route === 'signin' ? 'main-nav-menu-list-item-link is-current' : 'main-nav-menu-list-item-link'}>Sign in</NavLink>
                 </li>
             )
         } else {
             return (
                 <li className="main-nav-menu-list-item" key="7">
-                    <a href="#" onClick={(e) => { e.preventDefault(); this.props.signOutUser(); console.log('sign out'); }} className="main-nav-menu-list-item-link">Sign out</a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); this.props.signOutUser(); }} className="main-nav-menu-list-item-link">Sign out</a>
                 </li>
             )
+        }
+    }
+
+    renderInvoiceMenu() {
+        if(this.props.routing.route === 'new-invoice' || this.props.routing.route === 'edit-invoice') {
+            return [
+                <li className="main-nav-menu-list-item" key="2">
+                    <a onClick={this.handleUpdateTemplate.bind(this)} href="#" className="main-nav-menu-list-item-link">Save as a Template</a>
+                </li>,
+                <li className="main-nav-menu-list-item" key="3">
+                    <a onClick={this.handleSaveInvoices.bind(this)} href="#" className="main-nav-menu-list-item-link">Save Invoice</a>
+                </li>,
+            ]
         }
     }
 
@@ -26,19 +38,29 @@ class Navigation extends React.Component {
         if(this.props.authenticated) {
             return [
             <li className="main-nav-menu-list-item" key="1">
-                <NavLink className="main-nav-menu-list-item-link" to="new-invoice">New Invoice</NavLink>
+                <NavLink className={this.props.route === 'new-invoice' ? "main-nav-menu-list-item-link is-current" : "main-nav-menu-list-item-link"} to="new-invoice">New Invoice</NavLink>
             </li>,
-            <li className="main-nav-menu-list-item" key="2">
-                <NavLink href="#" className="main-nav-menu-list-item-link" to="3">Save as a Template</NavLink>
-            </li>,
-            <li className="main-nav-menu-list-item" key="3">
-                <NavLink href="#" className="main-nav-menu-list-item-link" to="4">Save Invoice</NavLink>
-            </li>,
+            this.renderInvoiceMenu(),
             <li className="main-nav-menu-list-item" key="4">
-                <NavLink className="main-nav-menu-list-item-link" to="5">Invoices list</NavLink>
+                <NavLink className={this.props.route === 'invoices-list' ? 'main-nav-menu-list-item-link is-current' : 'main-nav-menu-list-item-link'} to="invoices-list">Invoices list</NavLink>
             </li>
             ]
         }
+    }
+
+    handleSaveInvoices(e) {
+        e.preventDefault();
+        console.log('Saving invoice...');
+        this.props.saveInvoice({
+            activeInvoice: this.props.activeInvoice,
+            mode: this.props.routing
+        });
+    }
+
+    handleUpdateTemplate(e) {
+        e.preventDefault();
+        console.log('Updating template...');
+        this.props.updateTemplate(this.props.activeInvoice);
     }
 
     render() {
@@ -53,7 +75,7 @@ class Navigation extends React.Component {
                         { this.renderMenu() }
                         { !this.props.authenticated &&
                             <li className="main-nav-menu-list-item" key="5">
-                                <NavLink className="main-nav-menu-list-item-link" to="signup">Sign up</NavLink>
+                                <NavLink className={this.props.route === 'signup' ? 'main-nav-menu-list-item-link is-current' : 'main-nav-menu-list-item-link'} to="signup">Sign up</NavLink>
                             </li>
                         }
                         { this.authButton() }
@@ -70,9 +92,11 @@ class Navigation extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authenticated: state.auth.authenticated
+        authenticated: state.auth.authenticated,
+        routing: state.routing,
+        activeInvoice: state.invoice.activeInvoice,
+        invoicesList: state.invoicesList
     }
-
 }
 
 export default connect(mapStateToProps, actions)(Navigation);

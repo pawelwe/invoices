@@ -1,5 +1,5 @@
 {
-  "name": "react-starter-pw",
+  "name": "fakturki-react-redux",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Pawel Wegrzyniak",
@@ -11,9 +11,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "history": "^4.6.3",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
+    "react-moment": "^0.2.4",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

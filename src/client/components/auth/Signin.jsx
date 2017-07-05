@@ -8,6 +8,7 @@ class Signin extends React.Component {
 
     componentWillMount() {
         this.props.authError(null);
+        this.props.setRoute({route: 'signin', param: null});
     }
 
     handleFormSubmit({email, password}) {

@@ -8,6 +8,7 @@ class Signup extends React.Component {
 
     componentWillMount() {
         this.props.authError(null);
+        this.props.setRoute({route: 'signup', param: null});
     }
 
     handleFormSubmit(formProps) {

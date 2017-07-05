@@ -11,25 +11,32 @@ import InvoiceRow from './new-invoice/NewInvoiceRow';
 import CalcSummary from './new-invoice/NewInvoiceCalcSummary';
 import MainSummary from './new-invoice/NewInvoiceMainSummary';
 
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+
+import { isEmpty } from './helpers/isEmpty'
 
 class NewInvoice extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            invoiceRows: 1,
-            rowId: 1
-        };
-    }
-
     componentWillMount() {
-        this.props.fetchInvoiceTemplate()
+        if(isEmpty(this.props.match.params)) {
+            console.log('Main route -> new-invoice');
+            this.props.initInvoiceTemplate();
+            this.props.setRoute({route: 'new-invoice', param: null});
+        } else {
+            console.log('Sub route...')
+            const invoiceId = parseInt(this.props.match.params.id - 1);
+            this.props.loadInvoice(invoiceId);
+            this.props.setRoute({route: 'edit-invoice', param: this.props.match.params.id});
+        }
         // this.props.authorizedRequest();
+        this.props.fetchInvoicesList();
     }
 
     renderRows() {
         if(this.props.invoiceTemplate) {
-            const rows = this.props.invoiceTemplate.services.map((row, index) => {
-                return <InvoiceRow service={row} key={row.id} id={row.id} index={index + 1}/>
+            const rowsCount = this.props.invoiceTemplate.services.length;
+            const rows = this.props.invoiceTemplate.services.map((row, index, key) => {
+                return <InvoiceRow rowsCount={rowsCount} service={row} key={row.id} id={row.id} index={index + 1}/>
             });
             return rows;
         } else {
@@ -39,23 +46,21 @@ class NewInvoice extends React.Component {
 
     addInvoiceRow(e) {
         e.preventDefault();
-        const currentRowId = this.state.rowId;
-        this.setState({
-            rowId: currentRowId + 1
-        },
-            () => {
-                this.props.addInvoiceRow({
-                    ammount: '',
-                    id: this.state.rowId,
-                    priceNetto: '',
-                    vat: '',
-                    name: ''
-                })
-            }
-        );
+        this.props.addInvoiceRow({
+            amount: '',
+            id: Math.max.apply(Math, this.props.invoiceTemplate.services.map((item) => { return item.id })) + 1,
+            priceNetto: '',
+            vat: '',
+            name: ''
+        })
     }
 
     render() {
+
+        if (!this.props.invoiceTemplate || this.props.invoiceTemplate === {}) {
+            return <p>Loading...</p>;
+        }
+
         return (
             <div className="invoice">
                 {this.props.invoiceTemplate &&

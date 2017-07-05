@@ -1,5 +1,5 @@
 export default {
-  id: '1',
+  id: 1,
   executive: 'Agencja Ochrony Mienia "Maczeta", ul. Kosynierów 6b, 12-345 Wołomin, NIP: XXX-XX-XX-XXX',
   recipient: 'NABYWCA / ODBIORCA: Parafia św. Edwarda, ul. Biskupia 7, 12-345 Pruszków, NIP: XXX-XX-XX-XXX',
   invoiceTitle: 'Template',

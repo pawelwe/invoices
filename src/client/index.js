@@ -1,18 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
 
-import createHistory from 'history/createBrowserHistory'
-import { Route, Switch } from 'react-router'
+import createHistory from 'history/createBrowserHistory';
+import { Route, Switch } from 'react-router';
 
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import reducers from './reducers/' // Or wherever you keep your reducers
 
 import reduxThunk from 'redux-thunk';
 import { AUTH_USER } from './actions/types';
+
+
 
 // Styles
 import './scss/index.scss';
@@ -23,14 +27,19 @@ import SignIn from './components/auth/Signin';
 import SignUp from './components/auth/Signup';
 import Home from './components/Home';
 import NewInvoice from './components/NewInvoice';
+import InvoicesList from './components/InvoicesList';
 
 
 // HOC'S
 import reqireAuth from './components/RequireAuth';
 
+// console.log(syncHistoryWithStore);
+
 
 // Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory();
+export const history = createHistory();
+
+// const history = syncHistoryWithStore(history, store, [options])
 
 // Build the middleware for intercepting and dispatching navigation actions
 import Async from './middlewares/async';
@@ -63,12 +72,15 @@ ReactDOM.render(
         { /* ConnectedRouter will use the store from Provider automatically */ }
         <ConnectedRouter history={history}>
             <div className='container'>
-                <Nav />
+                <Route path='*' component={Nav}/>
                 <Switch>
-                    <Route exact path="/" component={Home}/>
-                    <Route exact path="/signin" component={SignIn}/>
-                    <Route exact path="/signup" component={SignUp}/>
-                    <Route exact path="/new-invoice" component={reqireAuth(NewInvoice)}/>
+                    <Route exact path='/' component={Home}/>
+                    <Route exact path='/' component={Nav}/>
+                    <Route exact path='/signin' component={SignIn}/>
+                    <Route exact path='/signup' component={SignUp}/>
+                    <Route exact path='/new-invoice' component={reqireAuth(NewInvoice)}/>
+                    <Route exact path='/invoice-:id' component={reqireAuth(NewInvoice)}/>
+                    <Route exact path='/invoices-list' component={reqireAuth(InvoicesList)}/>
                 </Switch>
             </div>
         </ConnectedRouter>
