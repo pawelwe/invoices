@@ -1,5 +1,5 @@
 import React from 'react';
-import {fullBruttoValue}  from '../store-getters';
+import {fullBruttoValue}  from '../../store-getters';
 
 const invoiceThumbMainSummary = (props) =>  {
 
