@@ -14,12 +14,14 @@ import InvoiceRow from './invoices-list/InvoiceThumbRow';
 import CalcSummary from './invoices-list/InvoiceThumbCalcSummary';
 import MainSummary from './invoices-list/InvoiceThumbMainSummary';
 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 class InvoicesList extends React.Component {
     componentWillMount() {
         this.props.fetchInvoicesList();
-
         this.props.setRoute({route: 'invoices-list', param: null});
+        this.props.resetInvoice();
     }
 
     renderHeader() {
@@ -101,7 +103,9 @@ class InvoicesList extends React.Component {
             </header>
             {this.props.invoicesList.length &&
             <ul className="invoices-thumbs-list">
-                {this.renderInvoicesList()}
+                <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
+                    {this.renderInvoicesList()}
+                </ReactCSSTransitionGroup>
             </ul>
             }
             <footer className="placeholder"></footer>

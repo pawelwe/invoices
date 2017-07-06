@@ -11,7 +11,7 @@ import InvoiceRow from './new-invoice/NewInvoiceRow';
 import CalcSummary from './new-invoice/NewInvoiceCalcSummary';
 import MainSummary from './new-invoice/NewInvoiceMainSummary';
 
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 import { isEmpty } from './helpers/isEmpty'
@@ -30,6 +30,10 @@ class NewInvoice extends React.Component {
         }
         // this.props.authorizedRequest();
         this.props.fetchInvoicesList();
+    }
+
+    componentWillUnmount(){
+        this.props.resetInvoice();
     }
 
     renderRows() {
@@ -63,26 +67,30 @@ class NewInvoice extends React.Component {
 
         return (
             <div className="invoice">
+                <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionAppearTimeout={500} transitionEnter={false} transitionLeave={false}>
                 {this.props.invoiceTemplate &&
-                <form className="invoice-form">
-                    <header>
-                        <InvoiceFrom />
-                        <InvoiceTo />
-                    </header>
-                    <section className="invoice-data">
-                        <InvoiceHeader />
-                        <InvoiceDate />
-                        <section className="invoice-calc">
-                            <InvoiceHeaderRow />
-                            { this.renderRows() }
-                            <a href="#" className="invoice-calc-add-row-btn" onClick={(e) => this.addInvoiceRow(e)}>+</a>
+                    <form className="invoice-form">
+                        <header>
+                            <InvoiceFrom />
+                            <InvoiceTo />
+                        </header>
+                        <section className="invoice-data">
+                            <InvoiceHeader />
+                            <InvoiceDate />
+                            <section className="invoice-calc">
+                                <InvoiceHeaderRow />
+                                <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                                    { this.renderRows() }
+                                </ReactCSSTransitionGroup>
+                                <a href="#" className="invoice-calc-add-row-btn" onClick={(e) => this.addInvoiceRow(e)}>+</a>
+                            </section>
+                            <CalcSummary />
+                            <MainSummary />
                         </section>
-                        <CalcSummary />
-                        <MainSummary />
-                    </section>
-                    <footer className="placeholder"></footer>
-                </form>
+                        <footer className="placeholder"></footer>
+                    </form>
                 }
+                </ReactCSSTransitionGroup>
             </div>
         )
     }

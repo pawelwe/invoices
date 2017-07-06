@@ -22,9 +22,11 @@ export default function(state = [], action) {
                 ]
             } else {
                 // Update current invoice
-                let udpatedState = state.slice();
-                udpatedState[parseInt(action.payload.mode.param)-1] = savedInvoice;
-                return udpatedState;
+                let oldState = state.slice();
+                let newState = oldState;
+                newState[parseInt(action.payload.mode.param)-1] = savedInvoice;
+                newState.modyficationDate = new Date();
+                return newState;
             }
         case DELETE_INVOICE:
             let updatedState = state.filter((item) => {
