@@ -9,7 +9,9 @@
 @import 'global/general';
 @import 'global/transitions';
 @import 'global/dialogs';
+@import 'global/preloader';
 @import 'components/start';
 @import 'components/navigation';
 @import 'components/invoice';
 @import 'components/invoices-list';
+@import 'toastr/index';

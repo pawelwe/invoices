@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { renderInput } from './RenderInput';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Signin extends React.Component {
 
@@ -31,21 +32,23 @@ class Signin extends React.Component {
         const { handleSubmit } = this.props;
 
         return (
-            <main className="start-page">
-                <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-                    <legend>- SIGNIN -</legend>
-                    <fieldset>
-                        <label htmlFor="email">Email</label>
-                        <Field name="email" component={renderInput} type="text"/>
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="password">Password</label>
-                        <Field name="password" component={renderInput} type="password"/>
-                    </fieldset>
-                    {this.renderAlert()}
-                    <button className="u-mt-20" action="submit">Sign in</button>
-                </form>
-            </main>
+            <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
+                <main className="start-page">
+                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                        <legend>- SIGNIN -</legend>
+                        <fieldset>
+                            <label htmlFor="email">Email</label>
+                            <Field name="email" component={renderInput} type="text"/>
+                        </fieldset>
+                        <fieldset>
+                            <label htmlFor="password">Password</label>
+                            <Field name="password" component={renderInput} type="password"/>
+                        </fieldset>
+                        {this.renderAlert()}
+                        <button className="button__key u-mt-20" action="submit">Sign in</button>
+                    </form>
+                </main>
+            </ReactCSSTransitionGroup>
         );
     }
 }

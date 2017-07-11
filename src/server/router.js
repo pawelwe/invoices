@@ -1,4 +1,5 @@
 const Authentication = require('./controllers/authentication');
+const invoices = require('./controllers/invoicesList');
 const passportService = require('./services/passport');
 const passport = require('passport');
 
@@ -17,4 +18,5 @@ module.exports = function(app) {
     });
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
+    app.get('/invoices-list', requireAuth, invoices.invoicesList);
 }

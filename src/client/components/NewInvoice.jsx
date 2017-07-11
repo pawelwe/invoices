@@ -10,6 +10,8 @@ import InvoiceHeaderRow from './new-invoice/NewInvoiceHeaderRow';
 import InvoiceRow from './new-invoice/NewInvoiceRow';
 import CalcSummary from './new-invoice/NewInvoiceCalcSummary';
 import MainSummary from './new-invoice/NewInvoiceMainSummary';
+import Preloader from './preloaders/preloader-1';
+
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -19,11 +21,9 @@ import { isEmpty } from './helpers/isEmpty'
 class NewInvoice extends React.Component {
     componentWillMount() {
         if(isEmpty(this.props.match.params)) {
-            console.log('Main route -> new-invoice');
             this.props.initInvoiceTemplate();
             this.props.setRoute({route: 'new-invoice', param: null});
         } else {
-            console.log('Sub route...')
             const invoiceId = parseInt(this.props.match.params.id - 1);
             this.props.loadInvoice(invoiceId);
             this.props.setRoute({route: 'edit-invoice', param: this.props.match.params.id});
@@ -60,9 +60,14 @@ class NewInvoice extends React.Component {
     }
 
     render() {
-
-        if (!this.props.invoiceTemplate || this.props.invoiceTemplate === {}) {
-            return <p>Loading...</p>;
+        if (this.props.dataIsLoading) {
+            return (
+                <div className="invoice">
+                    <div className="invoice-form">
+                        <Preloader />
+                    </div>
+                </div>
+            );
         }
 
         return (
@@ -98,7 +103,8 @@ class NewInvoice extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        invoiceTemplate: state.invoice.activeInvoice
+        invoiceTemplate: state.invoice.activeInvoice,
+        dataIsLoading: state.loadingData
     }
 }
 

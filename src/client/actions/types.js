@@ -2,12 +2,14 @@ export const INIT_INVOICE_TEMPLATE = 'init_invoice_template';
 export const LOAD_INVOICE = 'load_invoice';
 export const RESET_INVOICE = 'reset_invoice';
 
+export const LOADING_DATA = 'loading_data';
+
 export const UPDATE_TEMPLATE = 'update_template';
 
 export const FETCH_INVOICES_LIST = 'fetch_invoices_list';
 export const SAVE_INVOICE = 'save_invoice';
 export const DELETE_INVOICE = 'delete_invoice';
-export const SEND_INVOICES = 'send_invoices';
+
 
 export const ADD_INVOICE_ROW = 'add_invoice_row';
 export const REMOVE_INVOICE_ROW = 'remove_invoice_row';

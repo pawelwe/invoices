@@ -26,7 +26,8 @@ import {
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR,
-    CHECK_ROUTE
+    CHECK_ROUTE,
+    LOADING_DATA
 } from './types';
 
 // AJAX ACTIONS
@@ -46,20 +47,31 @@ function sendTemplate(data) {
     return axios.put(`${API_URL}/invoice-template.json`, data);
 }
 
+// Preloader
+export function loadingData(check) {
+    return {
+        type: LOADING_DATA,
+        payload: check
+    };
+}
+
 export function updateTemplate(newTemplate) {
     return function(dispatch) {
+        dispatch(loadingData(true));
         sendTemplate(newTemplate)
             .then(response => {
                 dispatch({
                     type: UPDATE_TEMPLATE,
                     payload: response.data
                 });
+                dispatch(loadingData(false));
             })
     }
 }
 
 export function saveInvoice(data) {
     return function(dispatch, getState) {
+        dispatch(loadingData(true));
         dispatch({
             type: SAVE_INVOICE,
             payload: data
@@ -74,12 +86,14 @@ export function sendInvoicesList(data) {
         sendInvoices(data)
             .then(response => {
                 console.log(response);
+                dispatch(loadingData(false));
             })
     }
 }
 
 export function deleteInvoice(invoiceId) {
     return function(dispatch, getState) {
+        dispatch(loadingData(true));
         dispatch({
             type: DELETE_INVOICE,
             payload: invoiceId
@@ -92,6 +106,7 @@ export function deleteInvoice(invoiceId) {
 // Initialize invoice template (fetch invoice template & set it to active)
 export function initInvoiceTemplate() {
     return function(dispatch) {
+        dispatch(loadingData(true));
         getTemplate()
             .then(response => {
                 dispatch(resetInvoice());
@@ -102,11 +117,13 @@ export function initInvoiceTemplate() {
                         type: INIT_INVOICE_TEMPLATE,
                         payload: response.data
                     });
+                    dispatch(loadingData(false));
                 } else {
                     dispatch({
                         type: INIT_INVOICE_TEMPLATE,
                         payload: staticInvoiceTemplate
                     });
+                    dispatch(loadingData(false));
                 }
             })
             .catch(error => {
@@ -114,6 +131,7 @@ export function initInvoiceTemplate() {
                     type: INIT_INVOICE_TEMPLATE,
                     payload: staticInvoiceTemplate
                 });
+                dispatch(loadingData(false));
             })
     }
 }
@@ -121,6 +139,7 @@ export function initInvoiceTemplate() {
 // Handle loading of invoice
 export function loadInvoice(invoiceId) {
     return function(dispatch) {
+        dispatch(loadingData(true));
         getInvoices()
             .then(response => {
                 dispatch(resetInvoice());
@@ -132,6 +151,7 @@ export function loadInvoice(invoiceId) {
                         type: LOAD_INVOICE,
                         payload: invoice
                     });
+                    dispatch(loadingData(false));
                 }
             })
             .then(() => {
@@ -152,6 +172,7 @@ export function resetInvoice() {
 // INVOICES LIST
 export function fetchInvoicesList() {
     return function(dispatch) {
+        dispatch(loadingData(true));
         getInvoices()
             .then(response => {
                 if(response.data && response.data !== {}) {
@@ -160,6 +181,7 @@ export function fetchInvoicesList() {
                         payload: response.data
                     });
                 }
+                dispatch(loadingData(false));
             })
             .catch(error => {
                 console.log(error);
@@ -256,12 +278,14 @@ export function resetInvoiceRows() {
 // AUTHENTICATION ACTIONS
 export function signinUser({ email, password }) {
     return function(dispatch) {
+        dispatch(loadingData(true));
         axios.post(`${ROOT_URL}/signin`, { email, password })
             .then(response => {
                 dispatch({
                     type: AUTH_USER
                 });
                 localStorage.setItem('token', response.data.token);
+                dispatch(loadingData(false));
                 dispatch(push('/new-invoice'));
             })
             .catch(error => {
@@ -282,21 +306,26 @@ export function signOutUser() {
 
 export function signupUser({ email, password }) {
     return function(dispatch) {
+        dispatch(loadingData(true));
         axios.post(`${ROOT_URL}/signup`, { email, password })
             .then(response => {
-                dispatch((() => {
-                    return {
-                        type: AUTH_USER
-                    }
-                })());
-
+                dispatch({
+                    type: AUTH_USER
+                });
                 localStorage.setItem('token', response.data.token);
-                store.dispatch(push('/new-invoice'));
+                dispatch(loadingData(false));
+                dispatch(push('/new-invoice'));
             })
             .catch(response => {
                 console.info(response.response.data.error);
                 dispatch(authError(response.response.data.error));
             });
+    }
+}
+
+export function goTo(route) {
+    return function(dispatch) {
+        dispatch(push(route));
     }
 }
 

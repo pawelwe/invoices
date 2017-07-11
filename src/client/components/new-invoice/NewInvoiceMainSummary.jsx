@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import {fullBruttoValue}  from '../../store-getters';
 
 class newInvoiceMainSummary extends React.Component {
 
@@ -19,7 +20,7 @@ class newInvoiceMainSummary extends React.Component {
     render() {
         return (
             <section className="invoice-summary">
-                <span rows="1" className="invoice-summary-row u-bold invoice-calc-label">Do zapłaty: zł</span>
+                <span rows="1" className="invoice-summary-row u-bold invoice-calc-label">Price to pay: {fullBruttoValue(this.props)} zł</span>
                 <textarea defaultValue={this.props.valueInWords} onChange={this.updateValueInWords.bind(this)} rows="1" className="invoice-summary-row u-text-xs"></textarea>
                 <textarea defaultValue={this.props.paymentType} onChange={this.updatePaymentType.bind(this)} rows="1" className="invoice-summary-row u-bold u-mt-15"></textarea>
                 <textarea defaultValue={this.props.accountNumber} onChange={this.updateAccountNumber.bind(this)} rows="1" className="invoice-summary-row u-text-xs"></textarea>
@@ -32,7 +33,8 @@ const mapStateToProps = (state) => {
     return {
         valueInWords: state.invoice.activeInvoice.valueInWords,
         paymentType: state.invoice.activeInvoice.paymentType,
-        accountNumber: state.invoice.activeInvoice.accountNumber
+        accountNumber: state.invoice.activeInvoice.accountNumber,
+        services: state.invoice.activeInvoice.services
     }
 }
 

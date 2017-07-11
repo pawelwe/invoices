@@ -9,7 +9,6 @@
   opacity: 0;
 }
 
-
 .fade-enter-active {
   transition: all .5s ease-out;
 }
@@ -19,8 +18,6 @@
 .fade-enter, .slide-fade-leave-active {
   opacity: 0;
 }
-
-
 
 .list-enter-active {
   transition: all .4s ease;
@@ -52,24 +49,9 @@
 
 .fade-appear {
   opacity: 0;
-  //animation-name: example;
-  //animation-duration: 2s;
 }
 
 .fade-appear.fade-appear-active {
   opacity: 1;
   transition: opacity 500ms ease-out;
-
 }
-
-//@keyframes example {
-//  0%   {
-//    opacity: 0;
-//  }
-//  50% {
-//    opacity: .5;
-//  }
-//  100% {
-//    opacity: 1;
-//  }
-//}

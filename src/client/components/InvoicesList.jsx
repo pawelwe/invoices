@@ -13,8 +13,11 @@ import InvoiceHeaderRow from './invoices-list/InvoiceThumbHeaderRow';
 import InvoiceRow from './invoices-list/InvoiceThumbRow';
 import CalcSummary from './invoices-list/InvoiceThumbCalcSummary';
 import MainSummary from './invoices-list/InvoiceThumbMainSummary';
+import Preloader from './preloaders/preloader-1';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+import {toastr} from 'react-redux-toastr';
 
 
 class InvoicesList extends React.Component {
@@ -27,11 +30,11 @@ class InvoicesList extends React.Component {
     renderHeader() {
         if(this.props.invoicesList.length) {
             return (
-                <h1>Lista fakturek:</h1>
+                <h1>Invoices list:</h1>
             )
         } else {
             return (
-                <h1>Nie masz jeszcze fakturek!</h1>
+                <h1>You have no invoices yet...</h1>
             )
         }
     }
@@ -53,63 +56,75 @@ class InvoicesList extends React.Component {
 
     deleteInvoice(invoiceId) {
         console.log('Deleting invoice:', invoiceId);
-        this.props.deleteInvoice(invoiceId);
+
+        const toastrConfirmOptions = {
+            onOk: () => {
+                this.props.deleteInvoice(invoiceId);
+            },
+            okText: 'Yes!',
+            cancelText: 'No!'
+        };
+        toastr.confirm(`Really delete invoice number ${invoiceId}?`, toastrConfirmOptions);
     }
 
     renderInvoicesList() {
-        if(this.props.invoicesList.length) {
-            const invoicesList = this.props.invoicesList.map((invoice, index) => {
-                return (
-                    <li className="invoice-thumb" key={invoice.id}>
-                        <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
-                        <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
-                            <h6 className="invoice-thumb-id">
-                                <span className="u-violet">{index + 1}</span>
-                                <span>. </span>
-                                <span>
-                                    <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
-                                </span>
-                            </h6>
-                            <header className="u-text-left">
-                                <InvoiceFrom text={invoice.executive} />
-                                <InvoiceTo text={invoice.recipient} />
-                            </header>
-                            <section className="invoice-thumb-data">
-                                <InvoiceHeader text={invoice.invoiceTitle} />
-                                <InvoiceDate text={invoice.invoiceDate} />
-                                <div className="invoice-calc">
-                                    <InvoiceHeaderRow {...invoice.labels} />
-                                    <ul>
-                                        {this.renderRows(invoice)}
-                                    </ul>
-                                </div>
-                                <CalcSummary services={invoice.services} />
-                                <MainSummary services={invoice.services} labels={invoice} />
-                            </section>
-                            <footer className="placeholder"></footer>
-                        </form>
-                    </li>
-                )
-            });
-            return invoicesList;
-        }
+        const invoicesList = this.props.invoicesList.map((invoice, index) => {
+            return (
+                <li className="invoice-thumb" key={invoice.id}>
+                    <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
+                    <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
+                        <h6 className="invoice-thumb-id">
+                            <span className="u-violet">{index + 1}</span>
+                            <span>. </span>
+                            <span>
+                                <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
+                            </span>
+                        </h6>
+                        <header className="u-text-left">
+                            <InvoiceFrom text={invoice.executive} />
+                            <InvoiceTo text={invoice.recipient} />
+                        </header>
+                        <section className="invoice-thumb-data">
+                            <InvoiceHeader text={invoice.invoiceTitle} />
+                            <InvoiceDate text={invoice.invoiceDate} />
+                            <div className="invoice-calc">
+                                <InvoiceHeaderRow {...invoice.labels} />
+                                <ul>
+                                    {this.renderRows(invoice)}
+                                </ul>
+                            </div>
+                            <CalcSummary services={invoice.services} />
+                            <MainSummary services={invoice.services} labels={invoice} />
+                        </section>
+                        <footer className="placeholder"></footer>
+                    </form>
+                </li>
+            )
+        });
+        return invoicesList;
     }
 
     render() {
+        if (this.props.dataIsLoading) {
+            return (
+                <div className="invoices-thumbs">
+                    <Preloader />
+                </div>
+            );
+        }
+
         return (
-        <main className="invoices-thumbs">
-            <header>
-                {this.renderHeader()}
-            </header>
-            {this.props.invoicesList.length &&
-            <ul className="invoices-thumbs-list">
-                <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
-                    {this.renderInvoicesList()}
-                </ReactCSSTransitionGroup>
-            </ul>
-            }
-            <footer className="placeholder"></footer>
-        </main>
+            <main className="invoices-thumbs">
+                <header>
+                    {this.renderHeader()}
+                </header>
+                <ul className="invoices-thumbs-list">
+                    <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
+                        {this.renderInvoicesList()}
+                    </ReactCSSTransitionGroup>
+                </ul>
+                <footer className="placeholder"></footer>
+            </main>
         )
     }
 }
@@ -117,7 +132,7 @@ class InvoicesList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         invoicesList: state.invoicesList,
-        activeInvoice: state.invoice.activeInvoice
+        dataIsLoading: state.loadingData
     }
 }
 

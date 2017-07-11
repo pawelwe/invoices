@@ -16,7 +16,8 @@ import reducers from './reducers/' // Or wherever you keep your reducers
 import reduxThunk from 'redux-thunk';
 import { AUTH_USER } from './actions/types';
 
-
+// Toaster
+import ReduxToastr from 'react-redux-toastr';
 
 // Styles
 import './scss/index.scss';
@@ -82,8 +83,10 @@ ReactDOM.render(
                     <Route exact path='/invoice-:id' component={reqireAuth(NewInvoice)}/>
                     <Route exact path='/invoices-list' component={reqireAuth(InvoicesList)}/>
                 </Switch>
+                <ReduxToastr timeOut={4000} newestOnTop={false} preventDuplicates position="top-left" transitionIn="fadeIn" transitionOut="fadeOut" progressBar />
             </div>
         </ConnectedRouter>
+
     </Provider>,
     document.getElementById('app')
 );

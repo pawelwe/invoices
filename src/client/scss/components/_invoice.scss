@@ -1,10 +1,10 @@
 //INVOICE CONTENT
 .invoice {
-
   background: $white;
   padding: 4rem 3rem;
   text-align: center;
   box-shadow: 5px 5px 5px rgba(0,0,0, .05);
+  position: relative;
 
   &-form {
     display: flex;
@@ -351,4 +351,23 @@
       }
     }
   }
+
+  &.is-loading {
+    display: flex;
+    flex-direction: column;
+    min-height: 700px;
+    justify-content: space-between;
+    position: relative;
+
+    &:after {
+      content: "Loading";
+      display: block;
+      position: absolute;
+      z-index: 99;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
 }
