@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ROOT_URL, API_URL} from '../config';
+import {API_URL} from '../config';
 import { push } from 'react-router-redux';
 import staticInvoiceTemplate from '../data/invoiceTemplate';
 
@@ -32,7 +32,7 @@ import {
 
 // export function authorizedRequest() {
 //     return function(dispatch) {
-//         axios.get(ROOT_URL, {
+//         axios.get(API_URL, {
 //             headers: {
 //                 authorization: localStorage.getItem('token')
 //             }
@@ -48,26 +48,26 @@ import {
 
 // AJAX ACTIONS
 function getTemplate() {
-    return axios.get(`${ROOT_URL}/invoice-template`, { headers: {'authorization': localStorage.getItem('token')}});
+    return axios.get(`${API_URL}/invoice-template`, { headers: {'authorization': localStorage.getItem('token')}});
 }
 
 function sendTemplate(data) {
     return axios({
         method: 'put',
-        url: `${ROOT_URL}/invoice-template`,
+        url: `${API_URL}/invoice-template`,
         headers: {'authorization': localStorage.getItem('token')},
         data: data
     });
 }
 
 function getInvoices() {
-    return axios.get(`${ROOT_URL}/invoices-list`, { headers: {'authorization': localStorage.getItem('token')}});
+    return axios.get(`${API_URL}/invoices-list`, { headers: {'authorization': localStorage.getItem('token')}});
 }
 
 function sendInvoices(data) {
     return axios({
         method: 'put',
-        url: `${ROOT_URL}/invoices-list`,
+        url: `${API_URL}/invoices-list`,
         headers: {'authorization': localStorage.getItem('token')},
         data: data
     });
@@ -309,7 +309,7 @@ export function resetInvoiceRows() {
 export function signinUser({ email, password }) {
     return function(dispatch) {
         dispatch(loadingData(true));
-        axios.post(`${ROOT_URL}/signin`, { email, password })
+        axios.post(`${API_URL}/signin`, { email, password })
             .then(response => {
                 dispatch({
                     type: AUTH_USER
@@ -337,7 +337,7 @@ export function signOutUser() {
 export function signupUser({ email, password }) {
     return function(dispatch) {
         dispatch(loadingData(true));
-        axios.post(`${ROOT_URL}/signup`, { email, password })
+        axios.post(`${API_URL}/signup`, { email, password })
             .then(response => {
                 dispatch({
                     type: AUTH_USER
@@ -368,7 +368,7 @@ export function authError(error) {
 
 export function authorizedRequest() {
     return function(dispatch) {
-        axios.get(ROOT_URL, {
+        axios.get(API_URL, {
             headers: {
                     authorization: localStorage.getItem('token')
                 }
