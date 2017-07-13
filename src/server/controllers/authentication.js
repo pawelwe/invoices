@@ -46,27 +46,6 @@ exports.signup = function(req, res, next) {
         });
 
         user.encryptPassword(user);
-
-        // bcrypt.genSalt(10, function(err, salt) {
-        //     if (err) {
-        //         return next(err);
-        //     }
-        //
-        //     // Encrypt
-        //     bcrypt.hash(user.password, salt, null, function (err, hash) {
-        //         if (err) {
-        //             return next(err);
-        //         }
-        //
-        //         // Overwrite plain text with encrypted password
-        //         user.password = hash;
-        //         next();
-        //     })
-        //
-        // })
-
-
-
         user.save(function(err) {
             if (err) {
                 return next(err);
