@@ -6,8 +6,8 @@ React/Redux/Node/MongoDB Application for generating invoices and saving them to 
 Front-end
 --------------
 
-- Create config/index.js in client folder and give it a api url, for example: (export const API_URL = 'http://localhost:3090';)
 - Run 'yarn install' in main dir
+- Check config/index.js in client folder for the API url, for example: (export const API_URL = 'http://localhost:3090';)
 - Run 'npm run dev' for developing
 - Run 'npm run build' for production
 
