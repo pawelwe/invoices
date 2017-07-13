@@ -17,7 +17,7 @@ class Navigation extends React.Component {
         } else {
             return (
                 <li className="main-nav-menu-list-item" key="7">
-                    <a href="#" onClick={(e) => { e.preventDefault(); this.props.signOutUser(); }} className="main-nav-menu-list-item-link">Sign out</a>
+                    <a href="#" onClick={this.handleSignOut.bind(this)} className="main-nav-menu-list-item-link">Sign out</a>
                 </li>
             )
         }
@@ -103,6 +103,11 @@ class Navigation extends React.Component {
             cancelText: 'Not yet...'
         };
         toastr.confirm('Update the template?', toastrConfirmOptions);
+    }
+
+    handleSignOut(e) {
+        e.preventDefault();
+        this.props.signOutUser();
     }
 
     render() {

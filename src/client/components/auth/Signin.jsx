@@ -12,9 +12,8 @@ class Signin extends React.Component {
         this.props.setRoute({route: 'signin', param: null});
     }
 
-    handleFormSubmit({email, password}) {
-        console.log(email, password);
-        this.props.signinUser({email, password});
+    handleFormSubmit(formProps) {
+        this.props.signinUser(formProps);
     }
 
     renderAlert() {
@@ -30,7 +29,6 @@ class Signin extends React.Component {
 
     render() {
         const { handleSubmit } = this.props;
-
         return (
             <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
                 <main className="start-page">

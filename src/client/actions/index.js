@@ -30,21 +30,47 @@ import {
     LOADING_DATA
 } from './types';
 
+// export function authorizedRequest() {
+//     return function(dispatch) {
+//         axios.get(ROOT_URL, {
+//             headers: {
+//                 authorization: localStorage.getItem('token')
+//             }
+//         })
+//             .then(response => {
+//                 console.log(response.data.message);
+//             })
+//             .catch(error => {
+//                 console.log(error);
+//             })
+//     }
+// }
+
 // AJAX ACTIONS
 function getTemplate() {
-    return axios.get(`${API_URL}/invoice-template.json`);
-}
-
-function getInvoices() {
-    return axios.get(`${API_URL}/invoices-list.json`);
-}
-
-function sendInvoices(data) {
-    return axios.put(`${API_URL}/invoices-list.json`, data);
+    return axios.get(`${ROOT_URL}/invoice-template`, { headers: {'authorization': localStorage.getItem('token')}});
 }
 
 function sendTemplate(data) {
-    return axios.put(`${API_URL}/invoice-template.json`, data);
+    return axios({
+        method: 'put',
+        url: `${ROOT_URL}/invoice-template`,
+        headers: {'authorization': localStorage.getItem('token')},
+        data: data
+    });
+}
+
+function getInvoices() {
+    return axios.get(`${ROOT_URL}/invoices-list`, { headers: {'authorization': localStorage.getItem('token')}});
+}
+
+function sendInvoices(data) {
+    return axios({
+        method: 'put',
+        url: `${ROOT_URL}/invoices-list`,
+        headers: {'authorization': localStorage.getItem('token')},
+        data: data
+    });
 }
 
 // Preloader
@@ -62,7 +88,7 @@ export function updateTemplate(newTemplate) {
             .then(response => {
                 dispatch({
                     type: UPDATE_TEMPLATE,
-                    payload: response.data
+                    payload: response.data.invoiceTemplate
                 });
                 dispatch(loadingData(false));
             })
@@ -115,7 +141,7 @@ export function initInvoiceTemplate() {
                     console.log('2 -> fetch invoice template');
                     dispatch({
                         type: INIT_INVOICE_TEMPLATE,
-                        payload: response.data
+                        payload: response.data.invoiceTemplate
                     });
                     dispatch(loadingData(false));
                 } else {
@@ -146,7 +172,7 @@ export function loadInvoice(invoiceId) {
                 console.log('1 -> reset');
                 if(response.data && response.data !== {}) {
                     console.log('2 -> fetch invoices list');
-                    const invoice = response.data[invoiceId];
+                    const invoice = response.data.invoicesList[invoiceId];
                     dispatch({
                         type: LOAD_INVOICE,
                         payload: invoice
@@ -178,13 +204,17 @@ export function fetchInvoicesList() {
                 if(response.data && response.data !== {}) {
                     dispatch({
                         type: FETCH_INVOICES_LIST,
-                        payload: response.data
+                        payload: response.data.invoicesList
                     });
                 }
                 dispatch(loadingData(false));
             })
             .catch(error => {
                 console.log(error);
+                dispatch({
+                    type: FETCH_INVOICES_LIST,
+                    payload: []
+                });
             });
     }
 }
@@ -317,7 +347,7 @@ export function signupUser({ email, password }) {
                 dispatch(push('/new-invoice'));
             })
             .catch(response => {
-                console.info(response.response.data.error);
+                // console.info(response.response.data.error);
                 dispatch(authError(response.response.data.error));
             });
     }
