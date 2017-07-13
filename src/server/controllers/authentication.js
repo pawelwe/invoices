@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jwt-simple');
 const config = require('../config');
+// const bcrypt = require('bcrypt-nodejs');
 
 function tokenForUser(user) {
     const timestamp = new Date().getTime();
@@ -43,6 +44,28 @@ exports.signup = function(req, res, next) {
             email: email,
             password: password
         });
+
+        user.encryptPassword(user);
+
+        // bcrypt.genSalt(10, function(err, salt) {
+        //     if (err) {
+        //         return next(err);
+        //     }
+        //
+        //     // Encrypt
+        //     bcrypt.hash(user.password, salt, null, function (err, hash) {
+        //         if (err) {
+        //             return next(err);
+        //         }
+        //
+        //         // Overwrite plain text with encrypted password
+        //         user.password = hash;
+        //         next();
+        //     })
+        //
+        // })
+
+
 
         user.save(function(err) {
             if (err) {

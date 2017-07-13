@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 // DB Setup
-mongoose.connect('mongodb://localhost:invoices/invoices');
+mongoose.connect('mongodb://localhost/invoices');
 
 
 // App Setup
