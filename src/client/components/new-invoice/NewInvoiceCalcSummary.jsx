@@ -11,11 +11,11 @@ class newInvoiceCalcSummary extends React.Component {
                 <li className="u-hidden invoice-calc-number"></li>
                 <li className="u-hidden invoice-calc-name"></li>
                 <li className="u-hidden invoice-calc-count"></li>
-                <li className="invoice-calc-summary-output invoice-calc-price-netto u-bold u-left-border-light-gray u-no-left-border-mobile">RAZEM</li>
+                <li className="invoice-calc-summary-output invoice-calc-price-netto u-bold u-left-border-light-gray u-no-left-border-mobile">SUM:</li>
                 <li className="invoice-calc-summary-output invoice-calc-value-netto">{fullNettoValue(this.props)}</li>
                 <li className="invoice-calc-summary-output invoice-calc-vat">-</li>
-                <li className="invoice-calc-summary-output invoice-calc-vat-value">{fullBruttoValue(this.props)}</li>
-                <li className="invoice-calc-summary-output invoice-calc-full-value">{fullVatValue(this.props)}</li>
+                <li className="invoice-calc-summary-output invoice-calc-vat-value">{fullVatValue(this.props)}</li>
+                <li className="invoice-calc-summary-output invoice-calc-full-value">{fullBruttoValue(this.props)}</li>
             </ul>
         )
     }
