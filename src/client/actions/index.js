@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_URL} from '../config';
+import {API_URL, PRELOADER_DELAY} from '../config';
 import { push } from 'react-router-redux';
 import staticInvoiceTemplate from '../data/invoiceTemplate';
 
@@ -90,7 +90,7 @@ export function updateTemplate(newTemplate) {
                     type: UPDATE_TEMPLATE,
                     payload: response.data.invoiceTemplate
                 });
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
             })
     }
 }
@@ -112,7 +112,7 @@ export function sendInvoicesList(data) {
         sendInvoices(data)
             .then(response => {
                 console.log(response);
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
             })
     }
 }
@@ -143,13 +143,13 @@ export function initInvoiceTemplate() {
                         type: INIT_INVOICE_TEMPLATE,
                         payload: response.data.invoiceTemplate
                     });
-                    dispatch(loadingData(false));
+                    window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
                 } else {
                     dispatch({
                         type: INIT_INVOICE_TEMPLATE,
                         payload: staticInvoiceTemplate
                     });
-                    dispatch(loadingData(false));
+                    window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
                 }
             })
             .catch(error => {
@@ -157,7 +157,7 @@ export function initInvoiceTemplate() {
                     type: INIT_INVOICE_TEMPLATE,
                     payload: staticInvoiceTemplate
                 });
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
             })
     }
 }
@@ -177,7 +177,7 @@ export function loadInvoice(invoiceId) {
                         type: LOAD_INVOICE,
                         payload: invoice
                     });
-                    dispatch(loadingData(false));
+                    window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
                 }
             })
             .then(() => {
@@ -207,7 +207,7 @@ export function fetchInvoicesList() {
                         payload: response.data.invoicesList
                     });
                 }
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
             })
             .catch(error => {
                 console.log(error);
@@ -315,7 +315,7 @@ export function signinUser({ email, password }) {
                     type: AUTH_USER
                 });
                 localStorage.setItem('token', response.data.token);
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
                 dispatch(push('/new-invoice'));
             })
             .catch(error => {
@@ -343,7 +343,7 @@ export function signupUser({ email, password }) {
                     type: AUTH_USER
                 });
                 localStorage.setItem('token', response.data.token);
-                dispatch(loadingData(false));
+                window.setTimeout(() => dispatch(loadingData(false)), PRELOADER_DELAY);
                 dispatch(push('/new-invoice'));
             })
             .catch(response => {

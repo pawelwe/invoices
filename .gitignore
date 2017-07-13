@@ -4,4 +4,3 @@ node_modules
 yarn-error.log
 src/server/node_modules
 src/server/config.js
-src/client/config/
