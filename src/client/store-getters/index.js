@@ -7,14 +7,14 @@ export const fullNettoValue = (props) => {
 
 export const fullVatValue = (props) => {
     const value = props.services.reduce((a, b) => {
-        return (parseInt(a) + (parseInt(b.priceNetto) * parseInt(b.amount) / 100) * b.vat).toFixed(2);
+        return (parseInt(a) + (parseInt(b.priceNetto) * parseInt(b.amount) / 100) * b.vat.replace('%', '')).toFixed(2);
     }, 0);
     return !isNaN(value) ? value : 0;
 };
 
 export const fullBruttoValue = (props) => {
     const value = props.services.reduce((a, b) => {
-        return (parseInt(a) + (parseInt(b.priceNetto) * parseInt(b.amount)) + ((b.priceNetto * b.amount) / 100) * b.vat).toFixed(2);
+        return (parseInt(a) + (parseInt(b.priceNetto) * parseInt(b.amount)) + ((b.priceNetto * b.amount) / 100) * b.vat.replace('%', '')).toFixed(2);
     }, 0);
     return !isNaN(value) ? value : 0;
 };
@@ -25,7 +25,7 @@ export const nettoValue = (props) => {
 };
 
 export const vatValue = (props) => {
-    const value = parseFloat((nettoValue(props) * (0 + '.' + parseFloat(props.vat)))).toFixed(2);
+    const value = parseFloat((nettoValue(props) * (0 + '.' + parseFloat(props.vat.replace('%', ''))))).toFixed(2);
     return !isNaN(value) ? value : 0;
 };
 
