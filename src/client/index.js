@@ -11,7 +11,7 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import reducers from './reducers/' // Or wherever you keep your reducers
+import reducers from './reducers/';
 
 import reduxThunk from 'redux-thunk';
 import { AUTH_USER } from './actions/types';
@@ -34,17 +34,11 @@ import InvoicesList from './components/InvoicesList';
 // HOC'S
 import reqireAuth from './components/RequireAuth';
 
-// console.log(syncHistoryWithStore);
-
-
 // Create a history of your choosing (we're using a browser history in this case)
 export const history = createHistory();
 
-// const history = syncHistoryWithStore(history, store, [options])
-
 // Build the middleware for intercepting and dispatching navigation actions
-import Async from './middlewares/async';
-const middleware = [routerMiddleware(history), Async, reduxThunk];
+const middleware = [routerMiddleware(history), reduxThunk];
 
 // Add the reducer to your store on the `router` key
 // Also apply our middleware for navigating
