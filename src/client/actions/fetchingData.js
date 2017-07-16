@@ -64,11 +64,9 @@ export function fetchInvoices() {
             })
             .catch(error => {
                 console.log(error);
-                toastr.info('Problem with fetching the list :(', toastrOptions);
-                dispatch({
-                    type: FETCH_INVOICES_LIST,
-                    payload: []
-                });
+                if(localStorage.getItem('user')) {
+                    toastr.info('Problem with fetching the list :(', toastrOptions);
+                }
             });
     }
 }

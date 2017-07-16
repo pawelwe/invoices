@@ -136,14 +136,14 @@ class InvoicesList extends React.Component {
                     <div className="u-text-center">
                         <h5 className="u-mb-5">Sort by:</h5>
                         <span>
-                        <button className={'sortButton ' + (this.props.sortBy === 'id' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'id')}>ID</button>
-                    </span>
+                            <button className={'sortButton ' + (this.props.sortBy === 'id' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'id')}>ID</button>
+                        </span>
                         <span>
-                        <button className={'sortButton ' + (this.props.sortBy === 'creationDate' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'creationDate')}>Creation date</button>
-                    </span>
+                            <button className={'sortButton ' + (this.props.sortBy === 'creationDate' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'creationDate')}>Creation date</button>
+                        </span>
                         <span>
-                        <button className={'sortButton ' + (this.props.sortBy === 'invoiceTitle' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'invoiceTitle')}>Title</button>
-                    </span>
+                            <button className={'sortButton ' + (this.props.sortBy === 'invoiceTitle' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'invoiceTitle')}>Title</button>
+                        </span>
                         <span className="sort-dir-arrow">
                         {sortDirArrow}
                     </span>

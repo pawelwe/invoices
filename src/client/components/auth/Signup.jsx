@@ -40,7 +40,7 @@ class Signup extends React.Component {
         return (
             <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
                 <main className="start-page">
-                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                    <form autoComplete='off' onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                         <legend>- SIGNUP -</legend>
                         <Field name="email" type="text" component={renderInput} label="Email"/>
                         <Field name="password" type="password" component={renderInput} label="Password"/>
@@ -60,8 +60,6 @@ function mapStateToProps(state) {
         currentUser: state.auth.currentUser
     }
 }
-
-
 
 Signup = connect(
     mapStateToProps,

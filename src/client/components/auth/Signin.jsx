@@ -40,7 +40,7 @@ class Signin extends React.Component {
         return (
             <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
                 <main className="start-page">
-                    <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+                    <form autoComplete='off' onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                         <legend>- SIGNIN -</legend>
                         <fieldset>
                             <label htmlFor="email">Email</label>
