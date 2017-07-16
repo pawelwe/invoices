@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/client/signup.js',
+    entry: './src/client/index.js',
     resolve: {
         extensions: ['.js', '.jsx', '.json']
     },

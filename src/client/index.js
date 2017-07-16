@@ -73,7 +73,7 @@ ReactDOM.render(
         { /* ConnectedRouter will use the store from Provider automatically */ }
         <ConnectedRouter history={history}>
             <div className='container'>
-                <Route path='*' component={Nav}/>
+                <Nav />
                 <Switch>
                     <Route exact path='/' component={SignIn}/>
                     <Route exact path='/dashboard' component={reqireAuth(Dashboard)}/>
