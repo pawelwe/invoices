@@ -22,7 +22,7 @@ export function signinUser({ email, password }) {
                 dispatch(setUser(response.data.user));
                 localStorage.setItem('token', response.data.token);
                 dispatch(preload(false, PRELOADER_DELAY));
-                dispatch(push('/new-invoice'));
+                dispatch(push('/'));
             })
             .catch(error => {
                 console.log(error);
@@ -52,7 +52,7 @@ export function signupUser({ email, password }) {
                 localStorage.setItem('token', response.data.token);
                 dispatch(setUser(response.data.user));
                 dispatch(preload(false, PRELOADER_DELAY));
-                dispatch(push('/new-invoice'));
+                dispatch(push('/'));
             })
             .catch(response => {
                 dispatch(authError(response.response.data.error));

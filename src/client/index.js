@@ -83,7 +83,7 @@ ReactDOM.render(
                     <Route exact path='/invoice-:id' component={reqireAuth(NewInvoice)}/>
                     <Route exact path='/invoices-list' component={reqireAuth(InvoicesList)}/>
                 </Switch>
-                <ReduxToastr timeOut={4000} newestOnTop={false} preventDuplicates position="top-left" transitionIn="fadeIn" transitionOut="fadeOut" progressBar />
+                <ReduxToastr timeOut={4000} newestOnTop={true} preventDuplicates position="top-left" transitionIn="fadeIn" transitionOut="fadeOut" progressBar />
             </div>
         </ConnectedRouter>
     </Provider>,
