@@ -19,8 +19,8 @@ import { toastr } from 'react-redux-toastr';
 
 class InvoicesList extends React.Component {
     componentWillMount() {
-        this.props.fetchInvoicesList();
         this.props.setRoute({route: 'invoices-list', param: null});
+        this.props.initInvoicesList();
         this.props.resetInvoice();
     }
 
@@ -57,7 +57,6 @@ class InvoicesList extends React.Component {
     }
 
     deleteInvoice(invoiceId) {
-        console.log('Deleting invoice:', invoiceId);
         const toastrConfirmOptions = {
             onOk: () => {
                 this.props.deleteInvoice(invoiceId);

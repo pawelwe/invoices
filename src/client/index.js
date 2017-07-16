@@ -26,7 +26,7 @@ import './scss/index.scss';
 import Nav from './components/Navigation';
 import SignIn from './components/auth/Signin';
 import SignUp from './components/auth/Signup';
-import Home from './components/Home';
+import Dashboard from './components/Dashboard';
 import NewInvoice from './components/NewInvoice';
 import InvoicesList from './components/InvoicesList';
 
@@ -75,8 +75,8 @@ ReactDOM.render(
             <div className='container'>
                 <Route path='*' component={Nav}/>
                 <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route exact path='/' component={Nav}/>
+                    <Route exact path='/' component={SignIn}/>
+                    <Route exact path='/dashboard' component={reqireAuth(Dashboard)}/>
                     <Route exact path='/signin' component={SignIn}/>
                     <Route exact path='/signup' component={SignUp}/>
                     <Route exact path='/new-invoice' component={reqireAuth(NewInvoice)}/>

@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-    entry: './src/client/signup.js',
+    entry: './src/client/index.js',
     resolve: {
         extensions: ['.js', '.jsx', '.json']
     },

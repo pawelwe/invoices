@@ -1,8 +1,6 @@
 import { PRELOADER_DELAY } from '../config';
 import { push } from 'react-router-redux';
-import staticInvoiceTemplate from '../data/invoiceTemplate';
-import { isEmpty } from '../helpers/isEmpty';
-import { getTemplate, sendTemplate, getInvoices, preload } from './fetchingData';
+import { sendTemplate, preload } from './fetchingData';
 import { sendInvoicesList } from './invoicesList';
 
 import {toastr} from 'react-redux-toastr';
@@ -35,35 +33,12 @@ import {
 export function initInvoiceTemplate() {
     return function(dispatch) {
         dispatch(preload(true));
-        getTemplate()
-            .then(response => {
-                dispatch(resetInvoice());
-                console.log('1 -> reset');
-                if(response.data && !isEmpty(response.data.invoiceTemplate)) {
-                    toastr.info('Server Template loaded :)', toastrOptions);
-                    console.log('2 -> fetch invoice template');
-                    dispatch({
-                        type: INIT_INVOICE_TEMPLATE,
-                        payload: response.data.invoiceTemplate
-                    });
-                    dispatch(preload(false, PRELOADER_DELAY));
-                } else {
-                    toastr.info('No server template, static template loaded!', toastrOptions);
-                    dispatch({
-                        type: INIT_INVOICE_TEMPLATE,
-                        payload: staticInvoiceTemplate
-                    });
-                    dispatch(preload(false, PRELOADER_DELAY));
-                }
-            })
-            .catch(error => {
-                toastr.info('Problem with template :(', toastrOptions);
-                dispatch({
-                    type: INIT_INVOICE_TEMPLATE,
-                    payload: staticInvoiceTemplate
-                });
-                dispatch(preload(false, PRELOADER_DELAY));
-            })
+        dispatch(resetInvoice());
+        dispatch({
+            type: INIT_INVOICE_TEMPLATE,
+            payload: JSON.parse(localStorage.getItem('invoiceTemplate'))
+        });
+        dispatch(preload(false, PRELOADER_DELAY));
     }
 }
 
@@ -77,6 +52,7 @@ export function updateTemplate(newTemplate) {
                     type: UPDATE_TEMPLATE,
                     payload: response.data.invoiceTemplate
                 });
+                localStorage.setItem('invoiceTemplate', JSON.stringify(response.data.invoiceTemplate));
                 dispatch(preload(false, PRELOADER_DELAY))
             })
     }
@@ -97,26 +73,13 @@ export function deleteInvoice(invoiceId) {
 export function loadInvoice(invoiceId) {
     return function(dispatch) {
         dispatch(preload(true));
-        getInvoices()
-            .then(response => {
-                dispatch(resetInvoice());
-                console.log('1 -> reset');
-                if(response.data && !isEmpty(response.data)) {
-                    console.log('2 -> fetch invoices list');
-                    const invoice = response.data.invoicesList.filter(invoice => invoice.id === invoiceId);
-                    dispatch({
-                        type: LOAD_INVOICE,
-                        payload: invoice[0]
-                    });
-                    dispatch(preload(false, PRELOADER_DELAY))
-                }
-            })
-            .then(() => {
-                console.log('3 -> go to route');
-                dispatch(push(`/invoice-${invoiceId}`));
-            })
-            .catch(error => {
-            });
+        const invoice = JSON.parse(localStorage.getItem('invoicesList')).filter(invoice => invoice.id === invoiceId);
+        dispatch({
+            type: LOAD_INVOICE,
+            payload: invoice[0]
+        });
+        dispatch(push(`/invoice-${invoiceId}`));
+        dispatch(preload(false, PRELOADER_DELAY))
     }
 }
 

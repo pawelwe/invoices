@@ -24,7 +24,6 @@ class NewInvoice extends React.Component {
             this.props.loadInvoice(invoiceId);
             this.props.setRoute({route: 'edit-invoice', param: this.props.match.params.id});
         }
-        this.props.fetchInvoicesList();
     }
 
     componentWillUnmount(){

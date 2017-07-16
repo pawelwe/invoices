@@ -1,4 +1,5 @@
 // Template & Invoice init
+export const FETCH_INVOICE_TEMPLATE = 'fetch_invoice_template';
 export const INIT_INVOICE_TEMPLATE = 'init_invoice_template';
 export const LOAD_INVOICE = 'load_invoice';
 export const RESET_INVOICE = 'reset_invoice';
@@ -30,8 +31,9 @@ export const UPDATE_INVOICE_ACCOUNT_NUMBER = 'update_invoice_account_number';
 
 // Invoices list
 export const FETCH_INVOICES_LIST = 'fetch_invoices_list';
+export const INIT_INVOICES_LIST = 'init_invoices_list';
 export const SAVE_INVOICE = 'save_invoices_list';
 export const DELETE_INVOICE = 'update_invoices_list';
 export const SORT_INVOICES = 'sort_invoices_list';
 export const FILTER_INVOICES = 'filter_invoices_list';
-export const RESET_FILTER = 'set_invoices_list_range';
+export const RESET_FILTER = 'reset_filter';

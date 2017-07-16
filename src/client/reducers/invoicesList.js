@@ -1,5 +1,6 @@
 import {
     FETCH_INVOICES_LIST,
+    INIT_INVOICES_LIST,
     SAVE_INVOICE,
     DELETE_INVOICE,
     SORT_INVOICES,
@@ -10,12 +11,18 @@ import {
 const defaultState = {
     sortDir: 'DESC',
     sortBy: '',
-    filtered: false
+    filtered: false,
+    activeCollection: []
 }
 
 export default function(state = defaultState, action) {
     switch (action.type) {
         case FETCH_INVOICES_LIST:
+            return {
+                ...state,
+                serverCollection: action.payload,
+            }
+        case INIT_INVOICES_LIST:
             return {
                 ...state,
                 serverCollection: action.payload,

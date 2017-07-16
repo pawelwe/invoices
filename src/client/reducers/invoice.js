@@ -1,4 +1,5 @@
 import {
+    FETCH_INVOICE_TEMPLATE,
     INIT_INVOICE_TEMPLATE,
     UPDATE_TEMPLATE,
     LOAD_INVOICE,
@@ -19,10 +20,14 @@ import {
 
 export default function(state = {}, action) {
     switch (action.type) {
-        case INIT_INVOICE_TEMPLATE:
+        case FETCH_INVOICE_TEMPLATE:
             return {
                 ...state,
                 invoiceTemplate: { ...action.payload },
+            }
+        case INIT_INVOICE_TEMPLATE:
+            return {
+                ...state,
                 activeInvoice: { ...action.payload }
             }
         case UPDATE_TEMPLATE:

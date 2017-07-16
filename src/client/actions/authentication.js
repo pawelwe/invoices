@@ -21,8 +21,9 @@ export function signinUser({ email, password }) {
                 });
                 dispatch(setUser(response.data.user));
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', response.data.user);
                 dispatch(preload(false, PRELOADER_DELAY));
-                dispatch(push('/'));
+                dispatch(push('/dashboard'));
             })
             .catch(error => {
                 console.log(error);
@@ -38,6 +39,9 @@ export function signOutUser() {
         });
         dispatch(setUser(null));
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('invoiceTemplate');
+        localStorage.removeItem('invoicesList');
     }
 }
 
@@ -50,9 +54,10 @@ export function signupUser({ email, password }) {
                     type: AUTH_USER
                 });
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', response.data.user);
                 dispatch(setUser(response.data.user));
                 dispatch(preload(false, PRELOADER_DELAY));
-                dispatch(push('/'));
+                dispatch(push('/dashboard'));
             })
             .catch(response => {
                 dispatch(authError(response.response.data.error));
@@ -77,10 +82,10 @@ export function setUser(userName) {
 export function authorizedRequest() {
     return function() {
         axios.get(API_URL, {
-            headers: {
-                authorization: localStorage.getItem('token')
-            }
-        })
+                headers: {
+                    authorization: localStorage.getItem('token')
+                }
+            })
             .then(response => {
                 console.log(response.data.message);
             })

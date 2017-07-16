@@ -124,7 +124,7 @@ class Navigation extends React.Component {
         return (
             <aside className="main-nav">
                 <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
-                    <NavLink className="main-nav-menu-list-item-link" to="/">
+                    <NavLink className="main-nav-menu-list-item-link" to="/dashboard">
                         <img src={owl} className="main-nav-logo" />
                     </NavLink>
                     <h1 className="main-nav-header">Invoices</h1>
