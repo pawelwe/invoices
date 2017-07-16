@@ -1,14 +1,11 @@
 @import '../../../node_modules/jeet/scss/index';
 @import '../../../node_modules/breakpoint-sass/stylesheets/breakpoint';
-@import '../../../node_modules/vex-js/sass/vex';
-@import '../../../node_modules/vex-js/sass/vex-theme-wireframe';
 @import 'global/variables';
 @import 'global/utils';
 @import 'global/reset';
 @import 'global/fonts';
 @import 'global/general';
 @import 'global/transitions';
-@import 'global/dialogs';
 @import 'global/preloader';
 @import 'components/start';
 @import 'components/navigation';

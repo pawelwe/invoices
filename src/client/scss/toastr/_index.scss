@@ -56,7 +56,6 @@ body.toastr-confirm-active {
     min-height: 70px;
     overflow: hidden;
     margin: $defaultSpace 0;
-    border-radius: 4px;
     position: relative;
     z-index: 2;
     color: #333;
@@ -96,7 +95,7 @@ body.toastr-confirm-active {
     }
 
     .rrt-left-container {
-      width: 80px;
+      width: 0;
       top: 0;
       left: 0;
       position: absolute;
@@ -120,18 +119,18 @@ body.toastr-confirm-active {
     }
 
     .rrt-middle-container {
-      width: 65%;
-      margin-left: 80px; 
+      width: 80%;
+      margin-left: 10%;
       position: relative;
       float: left;
+      font-size: 1rem;
       font-family: Museo-100;
       font-size: 1em;
-      text-align: left;
+      text-align: center;
       padding: 10px 5px;
       
       .rrt-title {
-        font-size: 1.1em;
-        font-weight: bold;
+        font-size: 1.2rem;
         margin-bottom: 5px;
       }
     }
@@ -141,18 +140,18 @@ body.toastr-confirm-active {
     }
 
     .close-toastr {
-      width: 10%;
-      height: 100%;
+      width: 25px;
+      height: 25px;
       position: absolute;
       top: 0;
       right: 0;
       background-color: transparent;
-      font-size: 22px;
+      font-size: 15px;
       border: none;
       outline: none;
-      opacity: 0.5;
       cursor: pointer;
       font-family: inherit;
+      color: $violet;
 
       &:hover {
         opacity: 1;
@@ -164,14 +163,14 @@ body.toastr-confirm-active {
     }
 
     &.rrt-info, &.rrt-success, &.rrt-warning, &.rrt-error {
-      color: white;
+      color: $black;
     }
 
     &.rrt-info {
       background-color: $infoBgColor;
 
       .rrt-progressbar {
-        background-color: darken($infoBgColor, 15%);
+        background-color: $violet
       }
     }
 
@@ -250,7 +249,7 @@ body.toastr-confirm-active {
     }
 
     .rrt-progress-container {
-      height: 5px;
+      height: 3px;
       margin: 0 -20px -20px -60px;
       position: absolute;
       bottom: 20px;

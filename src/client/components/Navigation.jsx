@@ -4,7 +4,8 @@ import owl from '../assets/images/logo-owl.svg';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {toastr} from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr';
+import { toastrOptions } from '../config';
 
 class Navigation extends React.Component {
     authButton() {
@@ -107,7 +108,16 @@ class Navigation extends React.Component {
 
     handleSignOut(e) {
         e.preventDefault();
-        this.props.signOutUser();
+        const toastrConfirmOptions = {
+            onOk: () => {
+                toastr.info('Good bye!', toastrOptions);
+
+                this.props.signOutUser();
+            },
+            okText: 'Yes!',
+            cancelText: 'Not yet...'
+        };
+        toastr.confirm('Do you want to sign out?', toastrConfirmOptions);
     }
 
     render() {

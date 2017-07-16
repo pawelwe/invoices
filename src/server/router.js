@@ -25,4 +25,14 @@ module.exports = function(app) {
     // Invoices list
     app.get('/invoices-list', requireAuth, InvoicesList.getInvoicesList);
     app.put('/invoices-list', requireAuth, InvoicesList.updateInvoicesList);
+
+    // app.use("/", expressStaticGzip("/my/rootFolder/"));
+
+    // Gzip
+    // app.get('/*.js', function (req, res, next) {
+    //     console.log('bundle');
+    //     req.url = req.url + '.gz';
+    //     res.set('Content-Encoding', 'gzip');
+    //     next();
+    // });
 }

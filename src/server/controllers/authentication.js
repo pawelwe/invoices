@@ -14,7 +14,8 @@ function tokenForUser(user) {
 exports.signin = function(req, res, next) {
     // User have valid logins
     res.send({
-       token: tokenForUser(req.user)
+        token: tokenForUser(req.user),
+        user: req.user.email
     });
 }
 
@@ -52,7 +53,8 @@ exports.signup = function(req, res, next) {
             }
 
             res.json({
-                token: tokenForUser(user)
+                token: tokenForUser(user),
+                user: email
             });
         })
     })

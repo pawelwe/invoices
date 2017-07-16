@@ -1,5 +1,6 @@
 html {
   font-size: 10px;
+  margin-left: calc(100vw - 100%);
 }
 
 body {
@@ -108,6 +109,22 @@ legend {
 
 button {
   font-family: Museo-100;
+  margin: 0 1px;
+  padding: 3px;
+  border: 1px solid $medium-gray-3;
+  background: #fff;
+  cursor: pointer;
+  transition: all 400ms ease-in;
+  &:hover {
+    transition: all 300ms ease-out;
+    color: $violet;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    border-color: $violet;
+  }
 }
 
 .button__key {

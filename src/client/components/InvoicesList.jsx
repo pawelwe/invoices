@@ -14,11 +14,8 @@ import InvoiceRow from './invoices-list/InvoiceThumbRow';
 import CalcSummary from './invoices-list/InvoiceThumbCalcSummary';
 import MainSummary from './invoices-list/InvoiceThumbMainSummary';
 import Preloader from './preloaders/preloader-1';
-
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
-import {toastr} from 'react-redux-toastr';
-
+import { toastr } from 'react-redux-toastr';
 
 class InvoicesList extends React.Component {
     componentWillMount() {
@@ -27,15 +24,20 @@ class InvoicesList extends React.Component {
         this.props.resetInvoice();
     }
 
+    componentWillUnmount() {
+        this.props.resetFilter();
+    }
+
     renderHeader() {
-        if(this.props.invoicesList.length) {
-            return (
-                <h1>Invoices list:</h1>
-            )
-        } else {
-            return (
-                <h1>You have no invoices yet...</h1>
-            )
+        if(this.props.invoicesList.length && !this.props.filtered) {
+            return <h1 className="u-flex-1">Invoices list:</h1>
+        } else if(this.props.filtered && this.props.invoicesList.length) {
+            return <h1 className="u-flex-1">Matches: <span className="u-violet">{this.props.invoicesList.length}</span></h1>
+        } else if(this.props.filtered && !this.props.invoicesList.length) {
+            return <h1 className="u-flex-1">No Matches!</h1>
+        }
+        else {
+            return <h1 className="u-flex-1">You have no invoices yes...</h1>
         }
     }
 
@@ -56,7 +58,6 @@ class InvoicesList extends React.Component {
 
     deleteInvoice(invoiceId) {
         console.log('Deleting invoice:', invoiceId);
-
         const toastrConfirmOptions = {
             onOk: () => {
                 this.props.deleteInvoice(invoiceId);
@@ -67,14 +68,35 @@ class InvoicesList extends React.Component {
         toastr.confirm(`Really delete invoice number ${invoiceId}?`, toastrConfirmOptions);
     }
 
+    sortInvoices(sortBy) {
+        this.props.sortInvoices(sortBy);
+    }
+
+    filterInvoices(e) {
+        this.props.resetFilter();
+        if (this.filterInputText.value !== '') {
+            this.props.filterInvoices(this.filterInputText.value);
+        }
+    }
+
+    handleFilterInputChange(e) {
+        e.key === 'Enter' ? this.filterInvoices() : null;
+        e.target.value === '' ? this.resetFilter() : null;
+    }
+
+    resetFilter() {
+        this.props.resetFilter();
+        this.filterInputText.value = '';
+    }
+
     renderInvoicesList() {
-        const invoicesList = this.props.invoicesList.map((invoice, index) => {
+        const invoicesList = this.props.invoicesList.map((invoice) => {
             return (
                 <li className="invoice-thumb" key={invoice.id}>
                     <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
                     <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
                         <h6 className="invoice-thumb-id">
-                            <span className="u-violet">{index + 1}</span>
+                            <span className="u-violet">{invoice.id}</span>
                             <span>. </span>
                             <span>
                                 <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
@@ -104,6 +126,47 @@ class InvoicesList extends React.Component {
         return invoicesList;
     }
 
+    renderSortSelect() {
+        let sortDirArrow = '';
+        if (this.props.sortDir !== null) {
+            sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑';
+        }
+        if (this.props.invoicesList.length > 1 || this.props.filtered) {
+            return (
+                <div className="u-flex-1">
+                    <div className="u-text-center">
+                        <h5 className="u-mb-5">Sort by:</h5>
+                        <span>
+                        <button className={'sortButton ' + (this.props.sortBy === 'id' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'id')}>ID</button>
+                    </span>
+                        <span>
+                        <button className={'sortButton ' + (this.props.sortBy === 'creationDate' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'creationDate')}>Creation date</button>
+                    </span>
+                        <span>
+                        <button className={'sortButton ' + (this.props.sortBy === 'invoiceTitle' ? 'is-active' : '')} onClick={this.sortInvoices.bind(this, 'invoiceTitle')}>Title</button>
+                    </span>
+                        <span className="sort-dir-arrow">
+                        {sortDirArrow}
+                    </span>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    renderFilter() {
+        if (this.props.invoicesList.length > 1 || this.props.filtered) {
+            return (
+                <div className="u-flex-1 u-text-right">
+                    <h5 className="u-text-center">Filter:</h5>
+                    <input ref={(input) => {this.filterInputText = input;}} onKeyUp={this.handleFilterInputChange.bind(this)} placeholder="Invoice title..." className="filter-input u-mt-5" type="text"/>
+                    <button onClick={this.filterInvoices.bind(this)}>Apply</button>
+                    <button onClick={this.resetFilter.bind(this)}>Clear</button>
+                </div>
+            )
+        }
+    }
+
     render() {
         if (this.props.dataIsLoading) {
             return (
@@ -115,15 +178,21 @@ class InvoicesList extends React.Component {
 
         return (
             <main className="invoices-thumbs">
-                <header>
-                    {this.renderHeader()}
-                </header>
-                <ul className="invoices-thumbs-list">
-                    <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
-                        {this.renderInvoicesList()}
-                    </ReactCSSTransitionGroup>
-                </ul>
-                <footer className="placeholder"></footer>
+                {this.props.invoicesList &&
+                <div>
+                    <header className="u-display-flex u-align-items-end">
+                        {this.renderHeader()}
+                        {this.renderSortSelect()}
+                        {this.renderFilter()}
+                    </header>
+                    <ul className="invoices-thumbs-list">
+                        <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
+                            {this.renderInvoicesList()}
+                        </ReactCSSTransitionGroup>
+                    </ul>
+                    <footer className="placeholder"></footer>
+                </div>
+                }
             </main>
         )
     }
@@ -131,8 +200,11 @@ class InvoicesList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        invoicesList: state.invoicesList,
-        dataIsLoading: state.loadingData
+        invoicesList: state.invoicesList.activeCollection,
+        dataIsLoading: state.loadingData,
+        sortDir: state.invoicesList.sortDir,
+        sortBy: state.invoicesList.sortBy,
+        filtered: state.invoicesList.filtered
     }
 }
 

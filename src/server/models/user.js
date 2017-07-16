@@ -6,9 +6,9 @@ const bcrypt = require('bcrypt-nodejs');
 const userSchema = new Schema({
     email: { type: String, unique: true, lowercase: true },
     password: { type: String },
+    invoiceTemplate: { type: Schema.Types.Mixed, default: {} },
     invoicesList: { type: Array },
-    invoiceTemplate: { type: Object }
-});
+}, { minimize: false });
 
 // On save Hook, encrypt password
 // Before saving a model, run this function

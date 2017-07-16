@@ -31,6 +31,10 @@
   font-weight: bold;
 }
 
+.u-mt-5 {
+  margin-top: 5px;
+}
+
 .u-mt-10 {
   margin-top: 10px;
 }
@@ -43,6 +47,10 @@
   margin-top: 20px;
 }
 
+.u-mb-5 {
+  margin-bottom: 5px;
+}
+
 .u-text-xs {
   font-size: 1rem;
 }
@@ -53,6 +61,38 @@
 
 .u-top {
   vertical-align: top;
+}
+
+.u-display-inline-block {
+  display: inline-block;
+}
+
+.u-display-flex {
+  display: flex;
+}
+
+.u-flex-1 {
+  flex: 1;
+}
+
+.u-justify-sb {
+  justify-content: space-between;
+}
+
+.u-justify-center {
+  justify-content: center;
+}
+
+.u-align-items-end {
+  align-items: flex-end;
+}
+
+.u-text-center {
+  text-align: center;
+}
+
+.u-text-right {
+  text-align: right;
 }
 
 .u-left-border-light-gray, .u-left-border-light-gray.invoice-thumb-calc-summary-output {

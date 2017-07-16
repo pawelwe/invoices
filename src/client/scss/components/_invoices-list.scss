@@ -266,3 +266,25 @@
   }
 
 }
+
+.filter-input {
+  width: 104px;
+  text-align: center;
+  padding: 3px;
+  height: 22px;
+  line-height: 22px;
+  &::placeholder {
+    color: $medium-gray;
+  }
+}
+
+.sort-dir-arrow {
+  color: $violet;
+}
+
+.sortButton {
+  &.is-active {
+    border-top: 1px solid $violet;
+    border-bottom: 1px solid $violet;
+  }
+}

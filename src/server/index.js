@@ -6,6 +6,7 @@ const app = express();
 const router = require('./router');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const expressStaticGzip = require('express-static-gzip');
 
 // DB Setup
 mongoose.connect('mongodb://localhost/invoices');
@@ -16,6 +17,10 @@ app.use(morgan('combined')); // Login Framework (debugging)
 app.use(cors()); // Enable CORS
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
+
+app.use('/public', expressStaticGzip('./public/'));
+
+// console.log(__dirname + '/public/');
 
 // Server Setup
 const port = process.env.PORT || 3090;

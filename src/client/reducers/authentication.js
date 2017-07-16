@@ -1,7 +1,8 @@
 import {
     AUTH_USER,
     UNAUTH_USER,
-    AUTH_ERROR
+    AUTH_ERROR,
+    SET_USER
 } from '../actions/types';
 
 
@@ -21,6 +22,11 @@ export default function(state = {}, action) {
             return {
                 ...state,
                 error: action.payload
+            };
+        case SET_USER:
+            return {
+                ...state,
+                currentUser: action.payload
             };
         default:
             return state

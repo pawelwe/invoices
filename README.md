@@ -7,7 +7,7 @@ Front-end
 --------------
 
 - Run 'yarn install' in main dir
-- Check config/index.js in client folder for the API url, for example: (export const API_URL = 'http://localhost:3090';)
+- Check config/signup.js in client folder for the API url, for example: (export const API_URL = 'http://localhost:3090';)
 - Run 'npm run dev' for developing
 - Run 'npm run build' for production
 

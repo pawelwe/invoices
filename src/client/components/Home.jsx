@@ -7,7 +7,6 @@ class Home extends React.Component {
     componentWillMount() {
         this.props.setRoute({route: 'home', param: null});
     }
-
     render() {
         return (
             <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
@@ -21,7 +20,6 @@ class Home extends React.Component {
             </ReactCSSTransitionGroup>
         );
     }
-
 }
 
 export default connect(null, actions)(Home);

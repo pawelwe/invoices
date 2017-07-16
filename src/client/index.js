@@ -86,7 +86,6 @@ ReactDOM.render(
                 <ReduxToastr timeOut={4000} newestOnTop={false} preventDuplicates position="top-left" transitionIn="fadeIn" transitionOut="fadeOut" progressBar />
             </div>
         </ConnectedRouter>
-
     </Provider>,
     document.getElementById('app')
 );

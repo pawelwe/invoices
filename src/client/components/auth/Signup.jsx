@@ -4,12 +4,20 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { renderInput } from './RenderInput';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { toastr } from 'react-redux-toastr';
+import { toastrOptions } from '../../config';
+import { validate } from '../../validation/signup';
 
 class Signup extends React.Component {
-
     componentWillMount() {
         this.props.authError(null);
         this.props.setRoute({route: 'signup', param: null});
+    }
+
+    componentWillUnmount() {
+        if(this.props.currentUser) {
+            toastr.info('Welcome', this.props.currentUser, toastrOptions);
+        }
     }
 
     handleFormSubmit(formProps) {
@@ -48,39 +56,12 @@ class Signup extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        errorMessage: state.auth.error
+        errorMessage: state.auth.error,
+        currentUser: state.auth.currentUser
     }
 }
 
-const validate = values => {
 
-    const errors = {};
-
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
-
-    if (!values.password) {
-        errors.password = 'Required';
-    } else if (values.password && values.password.length < 3) {
-        errors.password = 'At least 3 characters';
-    }
-
-    if (!values.passwordConfirm) {
-        errors.passwordConfirm = 'Required';
-    } else if (values.passwordConfirm && values.passwordConfirm.length < 3) {
-        errors.passwordConfirm = 'At least 3 characters';
-    }
-
-    if (values.password !== values.passwordConfirm) {
-        errors.passwordConfirm = 'Passwords do not match';
-    }
-
-    return errors;
-
-}
 
 Signup = connect(
     mapStateToProps,

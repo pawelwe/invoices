@@ -4,12 +4,20 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { renderInput } from './RenderInput';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { toastr } from 'react-redux-toastr';
+import { toastrOptions } from '../../config';
 
 class Signin extends React.Component {
 
     componentWillMount() {
         this.props.authError(null);
         this.props.setRoute({route: 'signin', param: null});
+    }
+
+    componentWillUnmount() {
+        if(this.props.currentUser) {
+            toastr.info('Welcome back!', this.props.currentUser, toastrOptions);
+        }
     }
 
     handleFormSubmit(formProps) {
@@ -53,7 +61,8 @@ class Signin extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        errorMessage: state.auth.error
+        errorMessage: state.auth.error,
+        currentUser: state.auth.currentUser
     }
 }
 

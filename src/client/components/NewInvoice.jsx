@@ -11,12 +11,8 @@ import InvoiceRow from './new-invoice/NewInvoiceRow';
 import CalcSummary from './new-invoice/NewInvoiceCalcSummary';
 import MainSummary from './new-invoice/NewInvoiceMainSummary';
 import Preloader from './preloaders/preloader-1';
-
-
+import { isEmpty } from '../helpers/isEmpty'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
-
-import { isEmpty } from './helpers/isEmpty'
 
 class NewInvoice extends React.Component {
     componentWillMount() {
@@ -24,11 +20,10 @@ class NewInvoice extends React.Component {
             this.props.initInvoiceTemplate();
             this.props.setRoute({route: 'new-invoice', param: null});
         } else {
-            const invoiceId = parseInt(this.props.match.params.id - 1);
+            const invoiceId = parseInt(this.props.match.params.id);
             this.props.loadInvoice(invoiceId);
             this.props.setRoute({route: 'edit-invoice', param: this.props.match.params.id});
         }
-        // this.props.authorizedRequest();
         this.props.fetchInvoicesList();
     }
 
@@ -39,7 +34,7 @@ class NewInvoice extends React.Component {
     renderRows() {
         if(this.props.invoiceTemplate) {
             const rowsCount = this.props.invoiceTemplate.services.length;
-            const rows = this.props.invoiceTemplate.services.map((row, index, key) => {
+            const rows = this.props.invoiceTemplate.services.map((row, index) => {
                 return <InvoiceRow rowsCount={rowsCount} service={row} key={row.id} id={row.id} index={index + 1}/>
             });
             return rows;

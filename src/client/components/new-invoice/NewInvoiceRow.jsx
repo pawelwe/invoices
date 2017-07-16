@@ -21,8 +21,6 @@ class newInvoiceRow extends React.Component {
 
     render() {
         if(this.props.service) {
-            console.log(this.props);
-
             return (
                 <li className="invoice-calc-row">
                     <span className="invoice-calc-output invoice-calc-number">{this.props.index}</span>
