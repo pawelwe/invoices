@@ -114,8 +114,8 @@ class InvoicesList extends React.Component {
                                         <span className="u-violet">{invoice.id}</span>
                                         <span>. </span>
                                         <span>
-                                    <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
-                                </span>
+                                            <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
+                                        </span>
                                     </h6>
                                     <header className="u-text-left">
                                         <InvoiceFrom text={invoice.executive} />
@@ -148,7 +148,7 @@ class InvoicesList extends React.Component {
     }
 
     renderSortSelect() {
-        let sortDirArrow = '';
+        let sortDirArrow = ' ↓';
         if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
         if (this.props.invoicesList && this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
