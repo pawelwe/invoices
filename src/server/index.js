@@ -16,8 +16,6 @@ app.use(cors()); // Enable CORS
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
 
-app.use('/public', expressStaticGzip('./public/'));
-
 // Server Setup
 const port = process.env.PORT || 3090;
 const server = http.createServer(app);
