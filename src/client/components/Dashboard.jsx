@@ -10,6 +10,7 @@ class Home extends React.Component {
         this.props.initInvoicesList();
         this.props.setRoute({route: 'home', param: null});
     }
+
     renderInfoTable() {
         return (
             <div className="u-mt-20">
@@ -20,6 +21,7 @@ class Home extends React.Component {
             </div>
         )
     }
+
     render() {
         return (
             <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>

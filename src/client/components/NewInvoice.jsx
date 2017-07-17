@@ -63,7 +63,6 @@ class NewInvoice extends React.Component {
                 </div>
             );
         }
-
         return (
             <div className="invoice">
                 <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionAppearTimeout={500} transitionEnter={false} transitionLeave={false}>

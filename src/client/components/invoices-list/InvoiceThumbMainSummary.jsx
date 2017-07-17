@@ -2,7 +2,6 @@ import React from 'react';
 import {fullBruttoValue}  from '../../store-getters';
 
 const invoiceThumbMainSummary = (props) =>  {
-
     return (
         <section className="invoice-thumb-summary">
             <span className="invoice-thumb-summary-row u-bold invoice-thumb-calc-label">Do zapłaty: {fullBruttoValue(props)} zł</span>

@@ -49,7 +49,6 @@ class Navigation extends React.Component {
             </li>
             ]
         }
-
         if(this.props.authenticated && this.props.routing.route === 'edit-invoice') {
             // New Invoice with confirm for edit mode
             return [
@@ -148,7 +147,6 @@ class Navigation extends React.Component {
         );
     }
 }
-
 function mapStateToProps(state) {
     return {
         authenticated: state.auth.authenticated,
@@ -157,5 +155,4 @@ function mapStateToProps(state) {
         invoicesList: state.invoicesList
     }
 }
-
 export default connect(mapStateToProps, actions)(Navigation);

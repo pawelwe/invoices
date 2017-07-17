@@ -71,7 +71,7 @@ class InvoicesList extends React.Component {
         this.props.sortInvoices(sortBy);
     }
 
-    filterInvoices(e) {
+    filterInvoices() {
         this.props.resetFilter();
         if (this.filterInputText.value !== '') {
             this.props.filterInvoices(this.filterInputText.value);
@@ -127,9 +127,7 @@ class InvoicesList extends React.Component {
 
     renderSortSelect() {
         let sortDirArrow = '';
-        if (this.props.sortDir !== null) {
-            sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑';
-        }
+        if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
         if (this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
                 <div className="u-flex-1">
@@ -174,7 +172,6 @@ class InvoicesList extends React.Component {
                 </div>
             );
         }
-
         return (
             <main className="invoices-thumbs">
                 {this.props.invoicesList &&

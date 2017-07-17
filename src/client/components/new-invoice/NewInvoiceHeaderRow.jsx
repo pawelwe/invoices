@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class newInvoiceRowHeader extends React.Component {
-
     handleRowUpdate(field, e) {
         this.props.updateInvoiceRowLabels({
             key: field,

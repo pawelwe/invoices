@@ -8,7 +8,6 @@ import { toastr } from 'react-redux-toastr';
 import { toastrOptions } from '../../config';
 
 class Signin extends React.Component {
-
     componentWillMount() {
         this.props.authError(null);
         this.props.setRoute({route: 'signin', param: null});

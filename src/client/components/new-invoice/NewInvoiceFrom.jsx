@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 class newInvoiceFrom extends React.Component {
-
     updateText(e) {
         this.props.updateInvoiceFrom(e.target.value);
     }
@@ -15,7 +14,6 @@ class newInvoiceFrom extends React.Component {
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => {

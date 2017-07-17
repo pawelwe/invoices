@@ -4,7 +4,6 @@ import * as actions from '../../actions';
 import {nettoValue, vatValue, bruttoValue}  from '../../store-getters';
 
 class newInvoiceRow extends React.Component {
-
     removeInvoiceRow(id) {
         if(this.props.rowsCount > 1) {
             this.props.removeInvoiceRow(id);
@@ -49,9 +48,7 @@ class newInvoiceRow extends React.Component {
                 </li>
             )
         }
-        else {
-            return <span></span>
-        }
+        else { return <span></span> }
     }
 }
 

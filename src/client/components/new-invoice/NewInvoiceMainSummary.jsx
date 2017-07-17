@@ -4,7 +4,6 @@ import * as actions from '../../actions';
 import {fullBruttoValue}  from '../../store-getters';
 
 class newInvoiceMainSummary extends React.Component {
-
     updateValueInWords(e) {
         this.props.updateInvoiceValueInWords(e.target.value);
     }
