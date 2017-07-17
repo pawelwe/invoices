@@ -6,6 +6,13 @@
   min-height: 500px;
   position: relative;
 
+  &-header {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: .8rem;
+    border-bottom: 1px dashed $medium-gray-3;
+  }
+
   &-list {
     margin-top: 2rem;
   }
@@ -273,6 +280,7 @@
   padding: 3px;
   height: 22px;
   line-height: 22px;
+  border: 1px solid $medium-gray-3;
   &::placeholder {
     color: $medium-gray;
   }
@@ -283,8 +291,42 @@
 }
 
 .sortButton {
+  color: $black;
   &.is-active {
     border-top: 1px solid $violet;
     border-bottom: 1px solid $violet;
   }
+}
+
+.pagination {
+  clear: both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  border-top: 1px dashed $medium-gray-3;
+  padding-top: 1rem;
+
+  a {
+    cursor: pointer;
+    color: $black;
+    padding: 0 .3rem;
+    margin: 0 0.5rem;
+    transition: all 450ms ease-out;
+    &:hover {
+      color: $violet;
+    }
+  }
+
+  .disabled a {
+    color: $medium-gray-2;
+    cursor: default;
+    opacity: .4;
+  }
+
+  .active a {
+    border-top: 1px solid $violet;
+    border-bottom: 1px solid $violet;
+  }
+
 }

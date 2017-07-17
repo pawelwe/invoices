@@ -14,10 +14,19 @@ import InvoiceRow from './invoices-list/InvoiceThumbRow';
 import CalcSummary from './invoices-list/InvoiceThumbCalcSummary';
 import MainSummary from './invoices-list/InvoiceThumbMainSummary';
 import Preloader from './preloaders/preloader-1';
+import Pagination from './pagination/Pagination';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { toastr } from 'react-redux-toastr';
 
 class InvoicesList extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            pageOfItems: []
+        };
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
     componentWillMount() {
         this.props.setRoute({route: 'invoices-list', param: null});
         this.props.initInvoicesList();
@@ -35,8 +44,7 @@ class InvoicesList extends React.Component {
             return <h1 className="u-flex-1">Matches: <span className="u-violet">{this.props.invoicesList.length}</span></h1>
         } else if(this.props.filtered && !this.props.invoicesList.length) {
             return <h1 className="u-flex-1">No Matches!</h1>
-        }
-        else {
+        } else {
             return <h1 className="u-flex-1">You have no invoices yes...</h1>
         }
     }
@@ -88,41 +96,55 @@ class InvoicesList extends React.Component {
         this.filterInputText.value = '';
     }
 
+    onChangePage(pageOfItems) {
+        this.setState({ pageOfItems: pageOfItems });
+    }
+
     renderInvoicesList() {
-        const invoicesList = this.props.invoicesList.map((invoice) => {
+        if(this.props.invoicesList) {
             return (
-                <li className="invoice-thumb" key={invoice.id}>
-                    <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
-                    <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
-                        <h6 className="invoice-thumb-id">
-                            <span className="u-violet">{invoice.id}</span>
-                            <span>. </span>
-                            <span>
-                                <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
-                            </span>
-                        </h6>
-                        <header className="u-text-left">
-                            <InvoiceFrom text={invoice.executive} />
-                            <InvoiceTo text={invoice.recipient} />
-                        </header>
-                        <section className="invoice-thumb-data">
-                            <InvoiceHeader text={invoice.invoiceTitle} />
-                            <InvoiceDate text={invoice.invoiceDate} />
-                            <div className="invoice-calc">
-                                <InvoiceHeaderRow {...invoice.labels} />
-                                <ul>
-                                    {this.renderRows(invoice)}
-                                </ul>
-                            </div>
-                            <CalcSummary services={invoice.services} />
-                            <MainSummary services={invoice.services} labels={invoice} />
-                        </section>
-                        <footer className="placeholder"></footer>
-                    </form>
-                </li>
+                <div>
+                    <ul className="invoices-thumbs-list">
+                        {this.state.pageOfItems.map(invoice =>
+                            <li className="invoice-thumb" key={invoice.id}>
+                                <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
+                                <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
+                                <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
+                                    <h6 className="invoice-thumb-id">
+                                        <span className="u-violet">{invoice.id}</span>
+                                        <span>. </span>
+                                        <span>
+                                    <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
+                                </span>
+                                    </h6>
+                                    <header className="u-text-left">
+                                        <InvoiceFrom text={invoice.executive} />
+                                        <InvoiceTo text={invoice.recipient} />
+                                    </header>
+                                    <section className="invoice-thumb-data">
+                                        <InvoiceHeader text={invoice.invoiceTitle} />
+                                        <InvoiceDate text={invoice.invoiceDate} />
+                                        <div className="invoice-calc">
+                                            <InvoiceHeaderRow {...invoice.labels} />
+                                            <ul>
+                                                {this.renderRows(invoice)}
+                                            </ul>
+                                        </div>
+                                        <CalcSummary services={invoice.services} />
+                                        <MainSummary services={invoice.services} labels={invoice} />
+                                    </section>
+                                    <footer className="placeholder"></footer>
+                                </form>
+                                </ReactCSSTransitionGroup>
+                            </li>
+                        )}
+                    </ul>
+                    <Pagination items={this.props.invoicesList} onChangePage={this.onChangePage} />
+                </div>
             )
-        });
-        return invoicesList;
+        } else {
+            return <div></div>
+        }
     }
 
     renderSortSelect() {
@@ -155,7 +177,7 @@ class InvoicesList extends React.Component {
         if (this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
                 <div className="u-flex-1 u-text-right">
-                    <h5 className="u-text-center">Filter:</h5>
+                    <h5 className="u-text-center">Search:</h5>
                     <input ref={(input) => {this.filterInputText = input;}} onKeyUp={this.handleFilterInputChange.bind(this)} placeholder="Invoice title..." className="filter-input u-mt-5" type="text"/>
                     <button onClick={this.filterInvoices.bind(this)}>Apply</button>
                     <button onClick={this.resetFilter.bind(this)}>Clear</button>
@@ -174,9 +196,8 @@ class InvoicesList extends React.Component {
         }
         return (
             <main className="invoices-thumbs">
-                {this.props.invoicesList &&
                 <div>
-                    <header className="u-display-flex u-align-items-end">
+                    <header className="invoices-thumbs-header">
                         {this.renderHeader()}
                         {this.renderSortSelect()}
                         {this.renderFilter()}
@@ -188,7 +209,6 @@ class InvoicesList extends React.Component {
                     </ul>
                     <footer className="placeholder"></footer>
                 </div>
-                }
             </main>
         )
     }

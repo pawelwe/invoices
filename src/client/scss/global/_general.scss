@@ -109,12 +109,16 @@ legend {
 
 button {
   font-family: Museo-100;
-  margin: 0 1px;
-  padding: 3px;
-  border: 1px solid $medium-gray-3;
-  background: #fff;
+  margin: 0 2.5px;
+  padding: 2.2px 3px;
+  background: transparent;
+  border: 0;
+  line-height: 1;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
   cursor: pointer;
   transition: all 400ms ease-in;
+  color: $black;
   &:hover {
     transition: all 300ms ease-out;
     color: $violet;
@@ -123,7 +127,8 @@ button {
     outline: none;
   }
   &:active {
-    border-color: $violet;
+    background: $violet;
+    //border-color: $violet;
   }
 }
 
