@@ -8,7 +8,6 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt-nodejs');
 
 // Create local strategy
-
 const localOptions = { usernameField: 'email' };
 const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
     // Verify this username and password

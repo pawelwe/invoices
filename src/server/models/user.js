@@ -10,14 +10,6 @@ const userSchema = new Schema({
     invoicesList: { type: Array },
 }, { minimize: false });
 
-// On save Hook, encrypt password
-// Before saving a model, run this function
-// userSchema.pre('save', function (next) {
-//     const user = this;
-//     console.log('PRE');
-//
-// })
-
 userSchema.methods.encryptPassword = (user) => {
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
