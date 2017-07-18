@@ -148,8 +148,8 @@ class InvoicesList extends React.Component {
     }
 
     renderSortSelect() {
-        let sortDirArrow = ' ↓';
-        if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
+        let sortDirArrow = ' ↑';
+        if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↑' : ' ↓'; }
         if (this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
                 <div className="u-flex-1">
