@@ -50,9 +50,6 @@ export const store = createStore(
     )
 );
 
-// Now you can dispatch navigation actions from anywhere!
-// store.dispatch(push('/foo'))
-
 const token = localStorage.getItem('token');
 
 // if we have token consider user to be signed in
