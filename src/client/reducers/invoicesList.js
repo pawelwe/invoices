@@ -9,7 +9,7 @@ import {
 } from '../actions/types';
 
 const defaultState = {
-    sortDir: 'ASC',
+    sortDir: 'DESC',
     sortBy: '',
     filtered: false,
     activeCollection: []
@@ -23,18 +23,10 @@ export default function(state = defaultState, action) {
                 serverCollection: action.payload,
             }
         case INIT_INVOICES_LIST:
-            let initialSortBy = 'id';
-            let initialCollection = action.payload.slice().sort((first, second) => {
-                const a = first[initialSortBy], b = second[initialSortBy];
-                    if(a < b) { return 1 }
-                    else if(a > b) { return -1 }
-                    else { return 0; }
-            });
             return {
                 ...state,
-                sortBy: initialSortBy,
                 serverCollection: action.payload,
-                activeCollection: initialCollection,
+                activeCollection: action.payload,
             }
         case SORT_INVOICES:
             let sortedCollection = state.activeCollection.slice();

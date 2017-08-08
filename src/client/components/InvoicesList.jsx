@@ -148,7 +148,7 @@ class InvoicesList extends React.Component {
     }
 
     renderSortSelect() {
-        let sortDirArrow = ' ↓';
+        let sortDirArrow = '';
         if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
         if (this.props.invoicesList && this.props.invoicesList.length > 1 || this.props.filtered) {
             return (

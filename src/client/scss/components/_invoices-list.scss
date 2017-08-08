@@ -8,8 +8,7 @@
 
   &-header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     padding-bottom: .8rem;
     border-bottom: 1px dashed $medium-gray-3;
   }
@@ -34,7 +33,7 @@
     min-height: 280px;
     text-align: center;
     box-shadow: 5px 5px 5px rgba(0,0,0, .05);
-    margin: 2rem 0 3rem;
+    margin: 2rem 0 4rem;
     border: 1px solid transparent;
     &:hover {
       border: 1px solid $medium-gray;
@@ -252,11 +251,6 @@
 
   .invoices-thumbs {
     @include column(3/4, $cycle: 2);
-
-    &-header {
-      flex-direction: row;
-      align-items: flex-end;
-    }
   }
 
   .invoice-thumb {
@@ -299,7 +293,7 @@
 .sortButton {
   color: $black;
   &.is-active {
-    color: $violet;
+    border-top: 1px solid $violet;
     border-bottom: 1px solid $violet;
   }
 }
