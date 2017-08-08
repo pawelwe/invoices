@@ -35,6 +35,9 @@ export function fetchTemplate() {
                     dispatch(preload(false, PRELOADER_DELAY));
                 }
             })
+            .catch(error => {
+                console.log(error);
+            });
     }
 }
 

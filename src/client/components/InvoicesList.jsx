@@ -38,7 +38,7 @@ class InvoicesList extends React.Component {
     }
 
     renderHeader() {
-        if(this.props.invoicesList.length && !this.props.filtered) {
+        if(this.props.invoicesList && this.props.invoicesList.length && !this.props.filtered) {
             return <h1 className="u-flex-1">Invoices list:</h1>
         } else if(this.props.filtered && this.props.invoicesList.length) {
             return <h1 className="u-flex-1">Matches: <span className="u-violet">{this.props.invoicesList.length}</span></h1>
@@ -150,7 +150,7 @@ class InvoicesList extends React.Component {
     renderSortSelect() {
         let sortDirArrow = '';
         if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
-        if (this.props.invoicesList.length > 1 || this.props.filtered) {
+        if (this.props.invoicesList && this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
                 <div className="u-flex-1">
                     <div className="u-text-center">
@@ -174,7 +174,7 @@ class InvoicesList extends React.Component {
     }
 
     renderFilter() {
-        if (this.props.invoicesList.length > 1 || this.props.filtered) {
+        if (this.props.invoicesList && this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
                 <div className="u-flex-1 u-text-right">
                     <h5 className="u-text-center">Search:</h5>
