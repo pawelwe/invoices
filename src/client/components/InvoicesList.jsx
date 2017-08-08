@@ -108,33 +108,33 @@ class InvoicesList extends React.Component {
                         {this.state.pageOfItems.map(invoice =>
                             <li className="invoice-thumb" key={invoice.id}>
                                 <ReactCSSTransitionGroup transitionName="fade" transitionAppear={true} transitionEnter={false} transitionLeave={false} transitionAppearTimeout={2500} transitionEnterTimeout={0} transitionLeaveTimeout={0}>
-                                    <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
-                                    <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
-                                        <h6 className="invoice-thumb-id">
-                                            <span className="u-violet">{invoice.id}</span>
-                                            <span>. </span>
-                                            <span>
-                                            <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
-                                        </span>
-                                        </h6>
-                                        <header className="u-text-left">
-                                            <InvoiceFrom text={invoice.executive} />
-                                            <InvoiceTo text={invoice.recipient} />
-                                        </header>
-                                        <section className="invoice-thumb-data">
-                                            <InvoiceHeader text={invoice.invoiceTitle} />
-                                            <InvoiceDate text={invoice.invoiceDate} />
-                                            <div className="invoice-calc">
-                                                <InvoiceHeaderRow {...invoice.labels} />
-                                                <ul>
-                                                    {this.renderRows(invoice)}
-                                                </ul>
-                                            </div>
-                                            <CalcSummary services={invoice.services} />
-                                            <MainSummary services={invoice.services} labels={invoice} />
-                                        </section>
-                                        <footer className="placeholder"></footer>
-                                    </form>
+                                <span onClick={this.deleteInvoice.bind(this, invoice.id)} className="invoice-thumb-remove">X</span>
+                                <form className="invoice-thumb-content" onClick={this.loadInvoice.bind(this, invoice.id)}>
+                                    <h6 className="invoice-thumb-id">
+                                        <span className="u-violet">{invoice.id}</span>
+                                        <span>. </span>
+                                        <span>
+                                    <Moment format='YYYY/MM/DD HH:mm'>{invoice.creationDate}</Moment>
+                                </span>
+                                    </h6>
+                                    <header className="u-text-left">
+                                        <InvoiceFrom text={invoice.executive} />
+                                        <InvoiceTo text={invoice.recipient} />
+                                    </header>
+                                    <section className="invoice-thumb-data">
+                                        <InvoiceHeader text={invoice.invoiceTitle} />
+                                        <InvoiceDate text={invoice.invoiceDate} />
+                                        <div className="invoice-calc">
+                                            <InvoiceHeaderRow {...invoice.labels} />
+                                            <ul>
+                                                {this.renderRows(invoice)}
+                                            </ul>
+                                        </div>
+                                        <CalcSummary services={invoice.services} />
+                                        <MainSummary services={invoice.services} labels={invoice} />
+                                    </section>
+                                    <footer className="placeholder"></footer>
+                                </form>
                                 </ReactCSSTransitionGroup>
                             </li>
                         )}
@@ -148,7 +148,7 @@ class InvoicesList extends React.Component {
     }
 
     renderSortSelect() {
-        let sortDirArrow = ' ↓';
+        let sortDirArrow = '';
         if (this.props.sortDir !== null) { sortDirArrow = this.props.sortDir === 'DESC' ? ' ↓' : ' ↑'; }
         if (this.props.invoicesList && this.props.invoicesList.length > 1 || this.props.filtered) {
             return (
